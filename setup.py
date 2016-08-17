@@ -24,7 +24,6 @@ setup(name='pyCardDeck',
           'License :: OSI Approved :: MIT License',
           'Natural Language :: English',
           'Operating System :: OS Independent',
-          'Programming Language :: Python :: 2.7',
           'Programming Language :: Python :: 3.5'
       ],
       keywords='cards deck card game shuffle draw discard',
