@@ -4,7 +4,7 @@
 pyCardDeck
 ==========
 
-Deck of cards with all the logic, so you don\t have to!
+Deck of cards with all the logic, so you don't have to!
 
 :copyright:     (c) 2016 David Jetelina
 :license:       MIT
