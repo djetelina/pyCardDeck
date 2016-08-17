@@ -5,12 +5,7 @@ pyCardDeck
 :target: http://pycarddeck.readthedocs.io/en/latest/?badge=latest
 :alt: Documentation Status
 
-  'The MIT License':
-    'prefix': 'svg-mit'
-    'body': """
-.. image:: https://img.shields.io/badge/license-MIT-${1:orange}.svg${2:?style=flat${3:-square}}
-   :target: http://opensource.org/licenses/MIT$9
-    """
+.. image:: https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000
 
 TODO
 ----
