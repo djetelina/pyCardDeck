@@ -2,8 +2,8 @@ pyCardDeck
 ==========
 
 .. image:: https://readthedocs.org/projects/pycarddeck/badge/?version=latest
-:target: http://pycarddeck.readthedocs.io/en/latest/?badge=latest
-:alt: Documentation Status
+    :target: http://pycarddeck.readthedocs.io/en/latest/?badge=latest
+    :alt: Documentation Status
 
 .. image:: https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000
 
