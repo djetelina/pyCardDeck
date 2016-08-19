@@ -17,7 +17,7 @@ class Deck:
     :type cards:        list
     :param reshuffle:   Set reshuffle to false if you want your deck not to reshuffle after it's depleted
     :type reshuffle:    bool
-    :param name:        Name of the deck, used when converting the Deck instance into st ring
+    :param name:        Name of the deck, used when converting the Deck instance into string
     :type name:         string
     """
 
