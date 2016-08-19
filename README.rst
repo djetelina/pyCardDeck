@@ -9,6 +9,23 @@ pyCardDeck
     :target: https://opensource.org/licenses/MIT
     :alt: MIT License
 
+.. image:: https://travis-ci.org/iScrE4m/pyCardDeck.svg?branch=master
+    :target: https://travis-ci.org/iScrE4m/pyCardDeck
+    :alt: Travis CI
+
+.. image:: https://codeclimate.com/github/iScrE4m/pyCardDeck/badges/gpa.svg
+   :target: https://codeclimate.com/github/iScrE4m/pyCardDeck
+   :alt: Code Climate
+
+.. image:: https://codeclimate.com/github/iScrE4m/pyCardDeck/badges/coverage.svg
+   :target: https://codeclimate.com/github/iScrE4m/pyCardDeck/coverage
+   :alt: Test Coverage
+
+.. image:: https://codeclimate.com/github/iScrE4m/pyCardDeck/badges/issue_count.svg
+   :target: https://codeclimate.com/github/iScrE4m/pyCardDeck
+   :alt: Issue Count
+
+
 Library aimed at anyone who wants to do any kind of deck manipulation in python.
 So probably game developers. The goal is to have the ultimate library for all of this,
 supporting all kinds of game types with clean and beautiful API - kind of like requests :)
