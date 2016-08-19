@@ -5,6 +5,3 @@ python:
 - "3.5"
 install: "pip install -r requirements.txt"
 script: py.test --cov=codeclimate_test_reporter tests
-addons:
-    code_climate:
-        repo_token: 7a1beee89dc493800b893d5e715776c51294e066ee4e16d69f2c9f196ce25b0d
