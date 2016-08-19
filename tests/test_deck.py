@@ -3,6 +3,7 @@
 
 from unittest import TestCase
 from pyCardDeck import *
+import codeclimate_test_reporter
 
 
 class Card:

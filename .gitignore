@@ -4,3 +4,4 @@ docs/_static
 build
 dist
 pyCardDeck.egg-info
+.coverage
