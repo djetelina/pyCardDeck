@@ -88,12 +88,6 @@ Exceptions
 
 .. autoexception:: CardNotFound
 
-Contents:
-
-.. toctree::
-   :maxdepth: 2
-
-
 
 Indices and tables
 ==================

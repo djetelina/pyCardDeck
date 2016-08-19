@@ -1,3 +1,6 @@
 .idea
 docs/_build
 docs/_static
+build
+dist
+pyCardDeck.egg-info

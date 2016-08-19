@@ -1,0 +1,13 @@
+language: python
+python:
+- "3.0"
+- "3.1"
+- "3.2"
+- "3.3"
+- "3.4"
+- "3.5"
+install: "pip install -r requirements.txt"
+script: py.test tests
+addons:
+    code_climate:
+        repo_token: 7a1beee89dc493800b893d5e715776c51294e066ee4e16d69f2c9f196ce25b0d

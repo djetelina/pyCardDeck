@@ -1,17 +1,40 @@
 from setuptools import setup, find_packages
+from setuptools.command.test import test as TestCommand
 from codecs import open
-from os import path
+import sys
 
-here = path.abspath(path.dirname(__file__))
+class PyTest(TestCommand):
+    user_options = [('pytest-args', 'a', 'Arguments to pass into py.test')]
 
-with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
+    def initialize_options(self):
+        TestCommand.initialize_options(self)
+        self.pytest_args = []
+
+    def finalize_options(self):
+        TestCommand.finalize_options(self)
+        self.test_args = []
+        self.test_suite = True
+
+    def run_tests(self):
+        import pytest
+
+
+        errno = pytest.main(self.pytest_args)
+        sys.exit(errno)
+
+
+test_requirements = ['pytest>=2.8.0', 'pytest-cov']
+
+
+with open('README.rst', encoding='utf-8') as f:
     long_description = f.read()
 
+
 setup(name='pyCardDeck',
-      version='1.0.0.dev1',
+      version='1.1.0.dev1',
       description='Logic for decks with cards',
       long_description=long_description,
-      url='',
+      url='https://www.djetelina.cz/project/pycarddeck/',
       author='David Jetelina',
       author_email='david@djetelina.cz',
       license='MIT',
@@ -24,9 +47,17 @@ setup(name='pyCardDeck',
           'License :: OSI Approved :: MIT License',
           'Natural Language :: English',
           'Operating System :: OS Independent',
+          'Programming Language :: Python',
+          'Programming Language :: Python :: 3.0',
+          'Programming Language :: Python :: 3.1',
+          'Programming Language :: Python :: 3.2',
+          'Programming Language :: Python :: 3.3',
+          'Programming Language :: Python :: 3.4',
           'Programming Language :: Python :: 3.5'
       ],
       keywords='cards deck card game shuffle draw discard',
       packages=find_packages(exclude=['tests', 'docs']),
-      install_requires=[]
+      install_requires=[],
+      cmdclass={'test': PyTest},
+      tests_require=test_requirements
       )

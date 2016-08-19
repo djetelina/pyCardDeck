@@ -9,9 +9,18 @@ pyCardDeck
     :target: https://opensource.org/licenses/MIT
     :alt: MIT License
 
-TODO
-----
+Library aimed at anyone who wants to do any kind of deck manipulation in python.
+So probably game developers. The goal is to have the ultimate library for all of this,
+supporting all kinds of game types with clean and beautiful API - kind of like requests :)
 
-* Write README
-* add LICENSE
-* Make sure setup.cfg, setup.py etc. are all ready
+For developers
+--------------
+
+The library will support only Python 3 and up, with py.test as the only required library.
+Always aim to write clean and readable code, make sure your tests are passing, document in docstrings (rst format)
+and when writing new modules, classes or functions, add them to docs (we are using Shpinx autodocs)
+
+TODO
+~~~~
+
+* Write examples

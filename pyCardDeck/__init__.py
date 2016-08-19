@@ -18,12 +18,7 @@ __version__ = '1.0.0.dev1'
 
 import logging
 from .deck import Deck
-
-try:
-    from logging import NullHandler
-except ImportError:
-    class NullHandler(logging.Handler):
-        def emit(self, record):
-            pass
+from .errors import *
+from logging import NullHandler
 
 logging.getLogger(__name__).addHandler(NullHandler())

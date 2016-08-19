@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 import logging
@@ -131,14 +132,27 @@ class Deck:
         :raises OutOfCards:     when there are no cards in the deck
         :raises NoCards:        when the deck runs out of cards (no reshuffle)
         :raises CardNotFound:   when the card is not found in the deck
+
+        .. note::
+
+            For card instances to match, the return of their __dict__ methods must
+            equal. If you are not using objects, exact equality will go through just
+            fine (`'a' == 'a'`).
         """
+        log.debug('Attempting to find: {}'.format(specific_card))
         if self.cards:
             found = False
             for available_card in self.cards:
-                if available_card == specific_card:
-                    card = available_card
-                    found = True
-                    break
+                try:
+                    if available_card.__dict__ == specific_card.__dict__:
+                        card = available_card
+                        found = True
+                        break
+                except AttributeError:
+                    if available_card == specific_card:
+                        card = available_card
+                        found = True
+                        break
             if not found:
                 log.debug('Specific card not found in the deck')
                 raise CardNotFound('Specific card not found in the deck')
@@ -150,11 +164,6 @@ class Deck:
                     self.empty = True
             log.debug('Card drawn: {0}'.format(card))
             return card
-
-        elif not self.reshuffle:
-            log.debug('No more cards to be drawn')
-            self.empty = True
-            raise OutOfCards('No more cards to be drawn')
 
         else:
             log.debug('You tried to draw from an empty deck')
@@ -170,11 +179,23 @@ class Deck:
         :return:        | True if exists
                         | False if doesn't exist
         :rtype:         bool
+
+        .. note::
+
+            For card instances to match, the return of their __dict__ methods must
+            equal. If you are not using objects, exact equality will go through just
+            fine (`'a' == 'a'`).
         """
         found = False
         for available_card in self.cards:
-            if available_card == card:
-                found = True
+            try:
+                if available_card.__dict__ == card.__dict__:
+                    found = True
+                    break
+            except AttributeError:
+                if available_card == card:
+                    found = True
+                    break
         log.debug('{0} exists in deck: {1}'.format(card, found))
         return found
 
@@ -188,13 +209,14 @@ class Deck:
             shuffle(self.cards)
             log.debug('Deck shuffled')
         else:
-            log.warn('You tried to shuffle an empty deck')
+            log.warning('You tried to shuffle an empty deck')
             raise NoCards('You tried to shuffle an empty deck')
 
     def shuffle_back(self):
         """
         Shuffles the discard pile back into the main pile
         """
+        log.debug(self.discard_pile)
         for card in self.discard_pile:
             self.cards.append(card)
         self.shuffle()
@@ -209,11 +231,15 @@ class Deck:
         :type card:         object
         :raises NotACard:   When you try to insert False/None into a discard pile
         """
+        log.debug("Card being discarded: {}".format(card))
         if card:
             self.discard_pile.append(card)
             log.debug('Card {0} discarded'.format(card))
+        # This had a reason, I remember testing something and ending
+        # up with False/None in discard_pile - if anyone knows what
+        # that was, let me know!
         else:
-            log.warn('You tried to insert False/None into a discard pile')
+            log.warning('You tried to insert False/None into a discard pile')
             raise NotACard('You tried to insert False/None into a discard pile')
 
     def add_single(self, card: object):
@@ -237,7 +263,7 @@ class Deck:
             self.cards.insert(randint(0, len(self.cards)), card)
         log.debug('New cards shuffled into the deck')
 
-    def show_top(self, number: int) -> int:
+    def show_top(self, number: int) -> list:
         """
         Selects the top X cards from the deck without drawing them
 
