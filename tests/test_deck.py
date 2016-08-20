@@ -3,10 +3,12 @@
 
 from unittest import TestCase
 from pyCardDeck import *
-import codeclimate_test_reporter
 
 
 class Card:
+    """
+    Example Card object, will be replaced by template later down the line
+    """
     def __init__(self, name: str, specific_string="abc"):
         self.name = name
         self.specific_string = specific_string
@@ -135,10 +137,12 @@ class TestDeck(TestCase):
         ], reshuffle=False)
         d.discard(Card('One'))
         d.discard(Card('Two'))
-        self.assertEqual(len(d.discard_pile), 2)
+        self.assertEqual(d.discarded, 2)
         with self.assertRaises(NotACard):
             d.discard(False)
-        self.assertEqual(len(d.discard_pile), 2)
+        self.assertEqual(d.discarded, 2)
+        d.discard(0)
+        assert d.discarded == 3
 
     def test_shuffle_back(self):
         d = Deck(cards=[
@@ -184,7 +188,11 @@ class TestDeck(TestCase):
         d = Deck(cards=[
             Card('One'), Card('Two'), Card('Three'), Card('Four')
         ], reshuffle=False)
-        self.assertEqual(d.cards_left, len(d.cards))
+        assert d.cards_left == 4
+
+    def test_cards_left_empty(self):
+        d = Deck()
+        assert d.cards_left == 0
 
     def test_discarded(self):
         d = Deck(cards=[
@@ -196,10 +204,17 @@ class TestDeck(TestCase):
 
     def test__repr__(self):
         d = Deck()
-        self.assertEqual('Deck of cards', repr(d))
+        self.assertEqual('Deck instance: cards=0, discarded=0, reshuffle=True, name=None',
+                               repr(d))
+        d = Deck(cards=[Card('One'), Card('Two'), Card('Three')], reshuffle=False, name='Deck')
+        d.discard(Card('Four'))
+        self.assertEqual('Deck instance: cards=3, discarded=1, reshuffle=False, name=Deck',
+                               repr(d))
+
+    def test__str__named(self):
+        d = Deck(name='SuperDeck')
+        assert 'SuperDeck' == str(d)
 
     def test__str__(self):
-        d = Deck(name="SuperDeck")
-        self.assertEqual("SuperDeck", str(d))
         d = Deck()
-        self.assertEqual('Deck of cards', str(d))
+        assert 'Deck of cards' == str(d)

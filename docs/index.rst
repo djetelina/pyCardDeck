@@ -17,25 +17,30 @@ Welcome to pyCardDeck's documentation!
          :return: The name of the deck
          :rtype:  str
 
-      .. py:attribute:: cards
-
-         :return: Cards in the deck
-         :rtype: list
-
-      .. py:attribute:: discard_pile
-
-         :return: Cards in the discard pile
-         :rtype: list
-
-      .. py:attribute:: empty
-
-         :return: Whether the deck is empty
-         :rtype:  bool
-
       .. py:attribute:: reshuffle
 
          :return: Whether the deck will be reshuffled when drawn out
          :rtype:  bool
+
+      .. py:attribute:: _cards
+
+         :return: Cards in the deck
+         :rtype: list
+
+      .. py:attribute:: _discard_pile
+
+         .. note::
+
+            Cards are not put in the discard pile automatically after drawing,
+            the code assumes they went into a hand of sorts and must be discarded
+            with :py:func:`discard` from there. This means that :py:attr:`reshuffle` doesn't
+            work on one card deck as you can't reshuffle an empty deck
+            (:py:exc:`errors.NoCards` would be raised).
+
+         :return: Cards in the discard pile
+         :rtype: list
+
+      .. autoattribute:: empty
 
       .. autoattribute:: cards_left
 

@@ -45,7 +45,7 @@ The library will support only Python 3.3+, with py.test as the only required lib
 Always aim to write clean and readable code, make sure your tests are passing, document in docstrings (rst format)
 and when writing new modules, classes or functions, add them to docs (we are using Shpinx autodocs)
 
-TODO
-~~~~
+Documentation
+~~~~~~~~~~~~~
 
-* Write examples
+http://pycarddeck.readthedocs.io/en/latest/?badge=latest
