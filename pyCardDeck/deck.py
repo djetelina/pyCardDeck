@@ -2,10 +2,15 @@
 # -*- coding: utf-8 -*-
 
 import logging
-from random import shuffle, choice, randint
+# noinspection PyCompatibility
+# because we are installing it through pip
+from typing import List, Union
+from random import shuffle, randint, randrange
 from .errors import NoCards, OutOfCards, NotACard, CardNotFound
 
 log = logging.getLogger(__name__)
+
+CardType = Union[object, str, int]
 
 
 class Deck:
@@ -13,16 +18,16 @@ class Deck:
     Deck you will be using. Make sure to create the instance somewhere reachable :)
 
     :param cards:       | Use this parameter if you don't plan to register your cards another way
-                        | Cards can be anything except False/None, it's however recommended to
-                        use (TBD) base class Card
-    :type cards:        list
+                        | Cards can be either an instance of a  object, string or an integer,
+                        | the documentation will be calling this :ref:`CardType` (because of Python's type hinting)
+    :type cards:        List[:ref:`CardType`]
     :param reshuffle:   Set reshuffle to false if you want your deck not to reshuffle after it's depleted
     :type reshuffle:    bool
     :param name:        Name of the deck, used when converting the Deck instance into string
     :type name:         string
     """
 
-    def __init__(self, cards=None, reshuffle=True, name=None):
+    def __init__(self, cards: List[CardType] = None, reshuffle: bool = True, name: str = None):
         """
         Create the deck
         """
@@ -32,25 +37,24 @@ class Deck:
         if self._cards is None:
             self._cards = []
         self._discard_pile = []
-        self.reshuffle = reshuffle
+        self._reshuffle = reshuffle
 
-    def draw(self):
+    def draw(self) -> CardType:
         """
         Draw the topmost card from the deck
 
-        :return:              Card from the list
-        :raises OutOfCards:    when there are no cards in the deck
-        :raises NoCards:       when the deck runs out of cards (no reshuffle)
+        :return:                Card from the list
+        :rtype:                 :ref:`CardType`
+        :raises OutOfCards:     when there are no cards in the deck
+        :raises NoCards:        when the deck runs out of cards (no reshuffle)
         """
-        if self._cards:
+        if len(self._cards):
             card = self._cards.pop(0)
-            if len(self._cards) == 0:
-                if self.reshuffle:
-                    self.shuffle_back()
+            self.reshuffle_if_empty()
             log.debug('Card drawn from top: {0}'.format(card))
             return card
 
-        elif not self.reshuffle:
+        elif not self._reshuffle:
             log.debug('You tried to draw. No more cards to be drawn')
             raise OutOfCards('You tried to draw. No more cards to be drawn')
 
@@ -58,23 +62,22 @@ class Deck:
             log.debug('You tried to draw from an empty deck')
             raise NoCards('You tried to draw from an empty deck')
 
-    def draw_bottom(self):
+    def draw_bottom(self) -> CardType:
         """
         Draw the bottommost card from the deck
 
-        :return:              Card from the list
-        :raises OutOfCards:    when there are no cards in the deck
-        :raises NoCards:       when the deck runs out of cards (no reshuffle)
+        :return:                Card from the list
+        :rtype:                 :ref:`CardType`
+        :raises OutOfCards:     when there are no cards in the deck
+        :raises NoCards:        when the deck runs out of cards (no reshuffle)
         """
-        if self._cards:
+        if len(self._cards):
             card = self._cards.pop()
-            if len(self._cards) == 0:
-                if self.reshuffle:
-                    self.shuffle_back()
+            self.reshuffle_if_empty()
             log.debug('Card drawn from bottom: {0}'.format(card))
             return card
 
-        elif not self.reshuffle:
+        elif not self._reshuffle:
             log.debug('You tried to draw from bottom. No more cards to be drawn')
             raise OutOfCards('You tried to draw from bottom. No more cards to be drawn')
 
@@ -82,24 +85,22 @@ class Deck:
             log.debug('You tried to draw from bottom of an empty deck')
             raise NoCards('You tried to draw from bottom of an empty deck')
 
-    def draw_random(self):
+    def draw_random(self) -> CardType:
         """
         Draw a random card from the deck
 
-        :return:              Card from the list
-        :raises OutOfCards:    when there are no cards in the deck
-        :raises NoCards:       when the deck runs out of cards (no reshuffle)
+        :return:                Card from the list
+        :rtype:                 :ref:`CardType`
+        :raises OutOfCards:     when there are no cards in the deck
+        :raises NoCards:        when the deck runs out of cards (no reshuffle)
         """
-        if self._cards:
-            card = choice(self._cards)
-            self._cards.remove(card)
-            if len(self._cards) == 0:
-                if self.reshuffle:
-                    self.shuffle_back()
+        if len(self._cards):
+            card = self._cards.pop(randrange(len(self._cards)))
+            self.reshuffle_if_empty()
             log.debug('Card drawn randomly: {0}'.format(card))
             return card
 
-        elif not self.reshuffle:
+        elif not self._reshuffle:
             log.debug('You tried to draw randomly. No more cards to be drawn')
             raise OutOfCards('You tried to draw randomly. No more cards to be drawn')
 
@@ -108,29 +109,31 @@ class Deck:
             raise NoCards('You tried to draw randomly from an empty deck')
 
     # noinspection PyUnboundLocalVariable
-    def draw_specific(self, specific_card: object) -> object:
+    def draw_specific(self, specific_card: CardType) -> CardType:
         """
         Draw a specific card from the deck
 
         .. note::
 
-            For card instances to match, the return of their __dict__ methods must
-            equal. If you are not using objects, exact equality will go through just
-            fine (`'a' == 'a'`).
+            For card instances to match, they should have `__eq__`  method
+            set to compare their equality. If you don't want to set those up,
+            make sure their `__dict__` are the same and their name is the same.
+
+            If you are using a string or an integer, don't worry about this!
 
         :param specific_card:   Card identical to the one you are looking for
-        :type specific_card:    object
+        :type specific_card:    :ref:`CardType`
         :return:                Card from the list
-        :rtype:                 object
+        :rtype:                 :ref:`CardType`
         :raises OutOfCards:     when there are no cards in the deck
         :raises NoCards:        when the deck runs out of cards (no reshuffle)
         :raises CardNotFound:   when the card is not found in the deck
         """
         log.debug('Attempting to find card: {}'.format(specific_card))
-        if self._cards:
+        if len(self._cards):
             found = False
             for available_card in self._cards:
-                if self.card_compare(specific_card, available_card):
+                if card_compare(specific_card, available_card):
                     card = available_card
                     found = True
                     break
@@ -138,9 +141,7 @@ class Deck:
                 log.debug('Specific card not found in the deck')
                 raise CardNotFound('Specific card not found in the deck')
             self._cards.remove(card)
-            if len(self._cards) == 0:
-                if self.reshuffle:
-                    self.shuffle_back()
+            self.reshuffle_if_empty()
             log.debug('Specific card drawn: {0}'.format(card))
             return card
 
@@ -148,40 +149,31 @@ class Deck:
             log.debug('You tried to draw a specific card from an empty deck')
             raise NoCards('You tried to draw a specific card from an empty deck')
 
-    def card_exists(self, card: object) -> bool:
+    def card_exists(self, card: CardType) -> bool:
         """
         Checks if a card exists in the deck
 
         .. note::
 
-            For card instances to match, the return of their __dict__ methods must
-            equal. If you are not using objects, exact equality will go through just
-            fine (`'a' == 'a'`).
+            For card instances to match, they should have `__eq__`  method
+            set to compare their equality. If you don't want to set those up,
+            make sure their `__dict__` are the same and their name is the same.
+
+            If you are using a string or an integer, don't worry about this!
 
         :param card:    Card identical to the one you are looking for
-        :type card:     object
+        :type card:     :ref:`CardType`
         :return:        | True if exists
                         | False if doesn't exist
         :rtype:         bool
         """
         found = False
         for available_card in self._cards:
-            if self.card_compare(card, available_card):
+            if card_compare(card, available_card):
                 found = True
                 break
         log.debug('Card {0} exists in the deck: {1}'.format(card, found))
         return found
-
-    @staticmethod
-    def card_compare(card: object, available_card: object) -> bool:
-        identity = False
-        try:
-            if available_card.__dict__ == card.__dict__:
-                identity = True
-        except AttributeError:
-            if available_card == card:
-                identity = True
-        return identity
 
     def shuffle(self):
         """
@@ -189,12 +181,20 @@ class Deck:
 
         :raises NoCards:     when there are no cards to be shuffled
         """
-        if self._cards:
+        if len(self._cards):
             shuffle(self._cards)
             log.debug('Deck shuffled')
         else:
             log.warning('You tried to shuffle an empty deck')
             raise NoCards('You tried to shuffle an empty deck')
+
+    def reshuffle_if_empty(self):
+        """
+        Function that checks if the deck is out of cards and if reshuffle is true, it
+        shuffles the discard pile back into the card pile
+        """
+        if not len(self._cards) and self._reshuffle:
+            self.shuffle_back()
 
     def shuffle_back(self):
         """
@@ -206,12 +206,12 @@ class Deck:
         self._discard_pile = []
         log.debug('Cards have been shuffled back from the discard pile')
 
-    def discard(self, card: object):
+    def discard(self, card: CardType):
         """
         Puts a card into the discard pile
 
         :param card:        Card to be discarded
-        :type card:         object
+        :type card:         :ref:`CardType`
         :raises NotACard:   When you try to insert False/None into a discard pile
         """
         log.debug("Card being discarded: {}".format(card))
@@ -227,28 +227,28 @@ class Deck:
             raise NotACard('You tried to insert {} (type({}) into a discard pile'
                            .format(card, type(card).__name__))
 
-    def add_single(self, card: object):
+    def add_single(self, card: CardType):
         """
         Shuffles a single card into the active deck
 
         :param card:    Card you want to shuffle in
-        :type card:     object
+        :type card:     :ref:`CardType`
         """
         self._cards.insert(randint(0, len(self._cards)), card)
         log.debug('New card shuffled into the deck')
 
-    def add_many(self, cards: list):
+    def add_many(self, cards: List[CardType]):
         """
         Shuffles a list of cards into the deck
 
         :param cards:   Cards you want to shuffle in
-        :type cards:    list
+        :type cards:    List[:ref:`CardType`]
         """
         for card in cards:
             self.add_single(card)
         log.debug('New cards shuffled into the deck')
 
-    def show_top(self, number: int) -> list:
+    def show_top(self, number: int) -> List[CardType]:
         """
         Selects the top X cards from the deck without drawing them
 
@@ -260,7 +260,7 @@ class Deck:
         :param number:      How many cards you want to show
         :type number:       int
         :return:            Cards you want to show
-        :rtype:             list
+        :rtype:             List[:ref:`CardType`]
         """
         return self._cards[0:number]
 
@@ -272,7 +272,7 @@ class Deck:
         :return:    Number of cards in the deck
         :rtype:     int
         """
-        if self._cards:
+        if len(self._cards):
             return len(self._cards)
         else:
             return 0
@@ -295,7 +295,7 @@ class Deck:
         :return:    Whether the deck is empty
         :rtype:     bool
         """
-        if self._cards:
+        if len(self._cards):
             return False
         else:
             return True
@@ -309,8 +309,8 @@ class Deck:
         :return:    'Deck of cards'
         :rtype:     string
         """
-        return 'Deck instance: cards={0}, discarded={3}, reshuffle={1}, name={2}'\
-            .format(self.cards_left, self.reshuffle, self.name, self.discarded)
+        return 'Deck(cards={0}, discarded={3}, reshuffle={1}, name={2})' \
+            .format(self.cards_left, self._reshuffle, self.name, self.discarded)
 
     def __str__(self) -> str:
         """
@@ -321,8 +321,7 @@ class Deck:
         This method is also called when you are providing arguments to str.format(), you can just provide
         your Deck instance and it will magically know the name, yay!
 
-        :return:    | Name of the deck if it has a name
-                    | or 'Deck of cards' if it has none
+        :return:    Name of the deck if it has a name  or 'Deck of cards' if it has none
         :rtype:     string
         """
 
@@ -341,3 +340,31 @@ class Deck:
         :rtype:     int
         """
         return len(self._cards)
+
+
+def card_compare(card: CardType, second_card: CardType) -> bool:
+    """
+    Function for comparing two cards. First it checks their `__eq__`,
+    if that returns False, it checks `__dict__` and name of the Class
+    that spawned them .
+
+    :param card:                First card to match
+    :type card:                 :ref:`CardType`
+    :param second_card:         Second card to match
+    :type second_card:          :ref:`CardType`
+    :return:                    Whether they are the same
+    :rtype:                     bool
+    """
+    identity = False
+    if second_card == card:
+        identity = True
+    else:
+        # For comparing instances of objects that have different IDs and don't
+        # have their __eq__ method set up to work when comparing.
+        try:
+            if second_card.__dict__ == card.__dict__ \
+                    and type(second_card).__name__ == type(card).__name__:
+                identity = True
+        except AttributeError:
+            pass
+    return identity

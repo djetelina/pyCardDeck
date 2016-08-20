@@ -18,6 +18,11 @@ class Card:
         return "Card instance {0.name}, {0.specific_string}" \
             .format(self)
 
+class DifferentCard(Card):
+    """
+    Card object that's a different class than card
+    """
+
 
 class TestDeck(TestCase):
     def test_draw(self):
@@ -112,14 +117,16 @@ class TestDeck(TestCase):
         self.assertFalse(d.empty)
 
     def test_card_exists_instance(self):
-        one = Card('One', specific_string="bbc")
+        one = Card('One', specific_string='bbc')
+        one_alt = DifferentCard('One', specific_string='bbc')
         d = Deck(cards=[
             one,
-            Card('one', specific_string="bbc"),
-            Card('One', specific_string="car"),
+            Card('one', specific_string='bbc'),
+            Card('One', specific_string='car'),
             Card('One')
         ], reshuffle=False)
         self.assertTrue(d.card_exists(one))
+        assert False == d.card_exists(one_alt)
         self.assertFalse(d.card_exists(Card('Five')))
 
     def test_card_exist_string(self):
@@ -205,11 +212,11 @@ class TestDeck(TestCase):
 
     def test__repr__(self):
         d = Deck()
-        self.assertEqual('Deck instance: cards=0, discarded=0, reshuffle=True, name=None',
+        self.assertEqual('Deck(cards=0, discarded=0, reshuffle=True, name=None)',
                                repr(d))
         d = Deck(cards=[Card('One'), Card('Two'), Card('Three')], reshuffle=False, name='Deck')
         d.discard(Card('Four'))
-        self.assertEqual('Deck instance: cards=3, discarded=1, reshuffle=False, name=Deck',
+        self.assertEqual('Deck(cards=3, discarded=1, reshuffle=False, name=Deck)',
                                repr(d))
 
     def test__str__named(self):

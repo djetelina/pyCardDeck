@@ -1,3 +1,4 @@
 pytest
 pytest-cov
 codeclimate-test-reporter
+typing

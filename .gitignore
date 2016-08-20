@@ -5,3 +5,5 @@ build
 dist
 pyCardDeck.egg-info
 .coverage
+.cache
+*.pyc
