@@ -1,9 +1,18 @@
+# IDEs and environemnts of contributors (feel free to add yours)
 .idea
+virtualenv
+.env
+
+# Sphinx
 docs/_build
 docs/_static
+
+# Packaging
 build
 dist
 pyCardDeck.egg-info
+
+# Created while running/debugging
 .coverage
 .cache
 *.pyc
