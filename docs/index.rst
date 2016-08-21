@@ -6,8 +6,10 @@
 Welcome to pyCardDeck's documentation!
 ======================================
 
+.. automodule:: pyCardDeck
+
 Types
------
+=====
 
 pyCardDeck isn't strict about types. It's however nice to use Python 3's type annotations.
 That's why we have custom types set up when needed
@@ -15,94 +17,115 @@ That's why we have custom types set up when needed
 .. _CardType:
 
 CardType
-~~~~~~~~
+--------
 
 Can be either instance of an object, string or an integer. Basically, it's important
-that they aren't bool or NoneType. It's however recommended to use our base class (TBD)
+that they aren't bool or NoneType. It's however recommended to inherit from
+one of the classes in :ref:`Cards`
 
-Module
-------
+Classes and Functions
+=====================
 
-.. automodule:: pyCardDeck
+Deck
+----
 
-    .. autoclass:: Deck
+.. autoclass:: pyCardDeck.deck.Deck
 
-        .. rubric:: Attributes
+Attributes
+~~~~~~~~~~
 
-        .. py:attribute:: name
+.. py:attribute:: name
 
-            :return: The name of the deck
-            :rtype:  str
+    :return: The name of the deck
+    :rtype:  str
 
-        .. py:attribute:: reshuffle
+.. py:attribute:: reshuffle
 
-            :return: Whether the deck will be reshuffled when drawn out
-            :rtype:  bool
+    :return: Whether the deck will be reshuffled when drawn out
+    :rtype:  bool
 
-        .. py:attribute:: _cards
+.. py:attribute:: _cards
 
-            :return: Cards in the deck
-            :rtype: list
+    :return: Cards in the deck
+    :rtype: list
 
-        .. py:attribute:: _discard_pile
+.. py:attribute:: _discard_pile
 
-            .. note::
+    .. note::
 
-                Cards are not put in the discard pile automatically after drawing,
-                the code assumes they went into a hand of sorts and must be discarded
-                with :py:func:`discard` from there. This means that :py:attr:`reshuffle` doesn't
-                work on one card deck as you can't reshuffle an empty deck
-                (:py:exc:`errors.NoCards` would be raised).
+        Cards are not put in the discard pile automatically after drawing,
+        the code assumes they went into a hand of sorts and must be discarded
+        with :py:func:`discard` from there. This means that :py:attr:`reshuffle` doesn't
+        work on one card deck as you can't reshuffle an empty deck
+        (:py:exc:`errors.NoCards` would be raised).
 
-            :return: Cards in the discard pile
-            :rtype: list
+    :return: Cards in the discard pile
+    :rtype: list
 
-        .. autoattribute:: empty
+.. autoattribute:: pyCardDeck.deck.Deck.empty
 
-        .. autoattribute:: cards_left
+.. autoattribute:: pyCardDeck.deck.Deck.cards_left
 
-        .. autoattribute:: discarded
+.. autoattribute:: pyCardDeck.deck.Deck.discarded
 
-        .. rubric:: Card drawing
+Card drawing
+~~~~~~~~~~~~
 
-        .. automethod:: draw
+.. automethod:: pyCardDeck.deck.Deck.draw
 
-        .. automethod:: draw_bottom
+.. automethod:: pyCardDeck.deck.Deck.draw_bottom
 
-        .. automethod:: draw_random
+.. automethod:: pyCardDeck.deck.Deck.draw_random
 
-        .. automethod:: draw_specific
+.. automethod:: pyCardDeck.deck.Deck.draw_specific
 
-        .. rubric:: Card information
+Card information
+~~~~~~~~~~~~~~~~
 
-        .. automethod:: card_exists
+.. automethod:: pyCardDeck.deck.Deck.card_exists
 
-        .. rubric:: Deck Manipulation
+Deck Manipulation
+~~~~~~~~~~~~~~~~~
 
-        .. automethod:: shuffle
+.. automethod:: pyCardDeck.deck.Deck.shuffle
 
-        .. automethod:: shuffle_back
+.. automethod:: pyCardDeck.deck.Deck.shuffle_back
 
-        .. automethod:: discard
+.. automethod:: pyCardDeck.deck.Deck.discard
 
-        .. automethod:: add_single
+.. automethod:: pyCardDeck.deck.Deck.add_single
 
-        .. automethod:: add_many
+.. automethod:: pyCardDeck.deck.Deck.add_many
 
-        .. automethod:: show_top
+.. automethod:: pyCardDeck.deck.Deck.show_top
 
-        .. rubric:: Magic Methods
+Magic Methods
+~~~~~~~~~~~~~
 
-        .. automethod:: __repr__
+.. automethod:: pyCardDeck.deck.Deck.__repr__
 
-        .. automethod:: __str__
+.. automethod:: pyCardDeck.deck.Deck.__str__
 
-        .. automethod:: __len__
+.. automethod:: pyCardDeck.deck.Deck.__len__
+
+Other Functions
+~~~~~~~~~~~~~~~
 
 .. autofunction:: pyCardDeck.deck.card_compare
 
+.. _Cards:
+
+Cards
+-----
+
+These classes are only recommended to inherit from, feel free to use your own!
+
+.. autoclass:: pyCardDeck.cards.BaseCard
+
+.. autoclass:: pyCardDeck.cards.PokerCard
+
 Exceptions
-==========
+----------
 
 .. automodule:: pyCardDeck.errors
 

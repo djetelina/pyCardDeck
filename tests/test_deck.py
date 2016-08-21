@@ -26,7 +26,6 @@ class DifferentCard(Card):
     """
 
 
-# noinspection PyUnresolvedReferences
 class TestDeck(TestCase):
     def test_draw(self):
         d = Deck(cards=[

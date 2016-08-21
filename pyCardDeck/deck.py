@@ -4,13 +4,12 @@
 import logging
 # noinspection PyCompatibility
 # because we are installing it through pip
-from typing import List, Union
+from typing import List
 from random import shuffle, randint, randrange
 from .errors import NoCards, OutOfCards, NotACard, CardNotFound
+from .cards import CardType
 
 log = logging.getLogger(__name__)
-
-CardType = Union[object, str, int]
 
 
 class Deck:
@@ -19,12 +18,12 @@ class Deck:
 
     :param cards:       | Use this parameter if you don't plan to register your cards another way
                         | Cards can be either an instance of a  object, string or an integer,
-                        | the documentation will be calling this :ref:`CardType` (because of Python's type hinting)
-    :type cards:        List[:ref:`CardType`]
+                        | the documentation will be calling this :ref:`CardType` (because of Python's rank hinting)
+    :rank cards:        List[:ref:`CardType`]
     :param reshuffle:   Set reshuffle to false if you want your deck not to reshuffle after it's depleted
-    :type reshuffle:    bool
+    :rank reshuffle:    bool
     :param name:        Name of the deck, used when converting the Deck instance into string
-    :type name:         string
+    :rank name:         string
     """
 
     def __init__(self, cards: List[CardType] = None, reshuffle: bool = True, name: str = None):
@@ -122,7 +121,7 @@ class Deck:
             If you are using a string or an integer, don't worry about this!
 
         :param specific_card:   Card identical to the one you are looking for
-        :type specific_card:    :ref:`CardType`
+        :rank specific_card:    :ref:`CardType`
         :return:                Card from the list
         :rtype:                 :ref:`CardType`
         :raises OutOfCards:     when there are no cards in the deck
@@ -162,7 +161,7 @@ class Deck:
             If you are using a string or an integer, don't worry about this!
 
         :param card:    Card identical to the one you are looking for
-        :type card:     :ref:`CardType`
+        :rank card:     :ref:`CardType`
         :return:        | True if exists
                         | False if doesn't exist
         :rtype:         bool
@@ -211,7 +210,7 @@ class Deck:
         Puts a card into the discard pile
 
         :param card:        Card to be discarded
-        :type card:         :ref:`CardType`
+        :rank card:         :ref:`CardType`
         :raises NotACard:   When you try to insert False/None into a discard pile
         """
         log.debug("Card being discarded: %s", card)
@@ -222,9 +221,9 @@ class Deck:
         # up with False/None in discard_pile - if anyone knows what
         # that was, let me know!
         else:
-            log.warning('You tried to insert %s (type(%s) into a discard pile',
+            log.warning('You tried to insert %s (rank(%s) into a discard pile',
                         card, type(card).__name__)
-            raise NotACard('You tried to insert {} (type({}) into a discard pile'
+            raise NotACard('You tried to insert {} (rank({}) into a discard pile'
                            .format(card, type(card).__name__))
 
     def add_single(self, card: CardType):
@@ -232,7 +231,7 @@ class Deck:
         Shuffles a single card into the active deck
 
         :param card:    Card you want to shuffle in
-        :type card:     :ref:`CardType`
+        :rank card:     :ref:`CardType`
         """
         self._cards.insert(randint(0, len(self._cards)), card)
         log.debug('New card shuffled into the deck')
@@ -242,7 +241,7 @@ class Deck:
         Shuffles a list of cards into the deck
 
         :param cards:   Cards you want to shuffle in
-        :type cards:    List[:ref:`CardType`]
+        :rank cards:    List[:ref:`CardType`]
         """
         for card in cards:
             self.add_single(card)
@@ -258,7 +257,7 @@ class Deck:
         only the remaining cards
 
         :param number:      How many cards you want to show
-        :type number:       int
+        :rank number:       int
         :return:            Cards you want to show
         :rtype:             List[:ref:`CardType`]
         """
@@ -349,9 +348,9 @@ def card_compare(card: CardType, second_card: CardType) -> bool:
     that spawned them .
 
     :param card:                First card to match
-    :type card:                 :ref:`CardType`
+    :rank card:                 :ref:`CardType`
     :param second_card:         Second card to match
-    :type second_card:          :ref:`CardType`
+    :rank second_card:          :ref:`CardType`
     :return:                    Whether they are the same
     :rtype:                     bool
     """

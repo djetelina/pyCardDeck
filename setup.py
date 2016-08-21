@@ -31,7 +31,7 @@ with open('README.rst', encoding='utf-8') as f:
     long_description = f.read()
 
 setup(name='pyCardDeck',
-      version='1.1.0.dev1',
+      version='1.1.1.0',
       description='Logic for decks with cards',
       long_description=long_description,
       url='https://www.djetelina.cz/project/pycarddeck/',
@@ -39,7 +39,7 @@ setup(name='pyCardDeck',
       author_email='david@djetelina.cz',
       license='MIT',
       classifiers=[
-          'Development Status :: 3 - Alpha',
+          'Development Status :: 4 - Beta',
           'Intended Audience :: Developers',
           'Topic :: Software Development :: Libraries',
           'Topic :: Software Development :: Libraries :: Python Modules',

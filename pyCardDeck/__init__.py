@@ -17,8 +17,9 @@ __copyright__ = 'Copyright 2016 David Jetelina'
 __version__ = '1.0.0.dev1'
 
 import logging
-from .deck import Deck
+from .deck import *
 from .errors import *
+from .cards import *
 from logging import NullHandler
 
 logging.getLogger(__name__).addHandler(NullHandler())
