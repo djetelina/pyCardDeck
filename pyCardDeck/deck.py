@@ -268,8 +268,12 @@ class Deck:
 
     def set_file_location(self, location):
         """
-        used to update the location
-        it will expand relative file path and ~ if it exists
+        Used to update the location
+        It will expand relative file path and ~ if it exists
+        The file path should be relative to the main script
+        A filename must be passed in as part of location
+
+        Example: ~/mydeck.yml
 
         :param location: the location of the file
         """
@@ -279,12 +283,12 @@ class Deck:
 
     def save(self, location=None):
         """
-        saves the current deck into a yaml format so the deck can be retrieved at a later date
+        Saves the current deck into a yaml format so the deck can be retrieved at a later date
 
-        useful if a game wishes to close and re open at a later date
+        Useful if a game wishes to close and re open at a later date
 
-        location is only needed once as it wil be saved
-        if there is no location passed in the first time it will error
+        Location is only needed once as it wil be saved
+        If there is no location passed in the first time it will error
 
         :param location:    this specifies a file location to save to
         """
@@ -308,10 +312,10 @@ class Deck:
 
     def load(self, location=None):
         """
-        loads a deck into the deck
-        first time a location must be passed
-        this location value can then be used by both save and load
-        to overwrite simply pass in a new value
+        Loads a deck into the deck
+        First time a location must be passed
+        This location value can then be used by both save and load
+        To overwrite simply pass in a new value
 
         :param location:    this specifies the file location to load from
         """
