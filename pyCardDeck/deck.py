@@ -51,7 +51,7 @@ class Deck:
         if len(self._cards):
             card = self._cards.pop(0)
             self.reshuffle_if_empty()
-            log.debug('Card drawn from top: {0}'.format(card))
+            log.debug('Card drawn from top: %s', card)
             return card
 
         elif not self._reshuffle:
@@ -74,7 +74,7 @@ class Deck:
         if len(self._cards):
             card = self._cards.pop()
             self.reshuffle_if_empty()
-            log.debug('Card drawn from bottom: {0}'.format(card))
+            log.debug('Card drawn from bottom: %s', card)
             return card
 
         elif not self._reshuffle:
@@ -97,7 +97,7 @@ class Deck:
         if len(self._cards):
             card = self._cards.pop(randrange(len(self._cards)))
             self.reshuffle_if_empty()
-            log.debug('Card drawn randomly: {0}'.format(card))
+            log.debug('Card drawn randomly: %s', card)
             return card
 
         elif not self._reshuffle:
@@ -129,7 +129,7 @@ class Deck:
         :raises NoCards:        when the deck runs out of cards (no reshuffle)
         :raises CardNotFound:   when the card is not found in the deck
         """
-        log.debug('Attempting to find card: {}'.format(specific_card))
+        log.debug('Attempting to find card: %s', specific_card)
         if len(self._cards):
             found = False
             for available_card in self._cards:
@@ -142,7 +142,7 @@ class Deck:
                 raise CardNotFound('Specific card not found in the deck')
             self._cards.remove(card)
             self.reshuffle_if_empty()
-            log.debug('Specific card drawn: {0}'.format(card))
+            log.debug('Specific card drawn: %s', card)
             return card
 
         else:
@@ -172,7 +172,7 @@ class Deck:
             if card_compare(card, available_card):
                 found = True
                 break
-        log.debug('Card {0} exists in the deck: {1}'.format(card, found))
+        log.debug('Card %s exists in the deck: %s', card, found)
         return found
 
     def shuffle(self):
@@ -214,16 +214,16 @@ class Deck:
         :type card:         :ref:`CardType`
         :raises NotACard:   When you try to insert False/None into a discard pile
         """
-        log.debug("Card being discarded: {}".format(card))
+        log.debug("Card being discarded: %s", card)
         if card or type(card) == int:
             self._discard_pile.append(card)
-            log.debug('Card {0} discarded'.format(card))
+            log.debug('Card %s discarded', card)
         # This had a reason, I remember testing something and ending
         # up with False/None in discard_pile - if anyone knows what
         # that was, let me know!
         else:
-            log.warning('You tried to insert {} (type({}) into a discard pile'
-                        .format(card, type(card).__name__))
+            log.warning('You tried to insert %s (type(%s) into a discard pile',
+                        card, type(card).__name__)
             raise NotACard('You tried to insert {} (type({}) into a discard pile'
                            .format(card, type(card).__name__))
 

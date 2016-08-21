@@ -1,8 +1,11 @@
 from setuptools import setup, find_packages
+# noinspection PyPep8Naming
 from setuptools.command.test import test as TestCommand
 from codecs import open
 import sys
 
+
+# noinspection PyCallByClass,PyAttributeOutsideInit
 class PyTest(TestCommand):
     user_options = [('pytest-args', 'a', 'Arguments to pass into py.test')]
 
@@ -18,17 +21,14 @@ class PyTest(TestCommand):
     def run_tests(self):
         import pytest
 
-
         errno = pytest.main(self.pytest_args)
         sys.exit(errno)
 
 
 test_requirements = ['pytest>=2.8.0', 'pytest-cov']
 
-
 with open('README.rst', encoding='utf-8') as f:
     long_description = f.read()
-
 
 setup(name='pyCardDeck',
       version='1.1.0.dev1',

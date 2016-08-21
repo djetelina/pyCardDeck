@@ -10,6 +10,7 @@ class Card:
     """
     Example Card object, will be replaced by template later down the line
     """
+
     def __init__(self, name: str, specific_string="abc"):
         self.name = name
         self.specific_string = specific_string
@@ -18,12 +19,14 @@ class Card:
         return "Card instance {0.name}, {0.specific_string}" \
             .format(self)
 
+
 class DifferentCard(Card):
     """
     Card object that's a different class than card
     """
 
 
+# noinspection PyUnresolvedReferences
 class TestDeck(TestCase):
     def test_draw(self):
         d = Deck(cards=[
@@ -126,6 +129,7 @@ class TestDeck(TestCase):
             Card('One')
         ], reshuffle=False)
         self.assertTrue(d.card_exists(one))
+        # noinspection PyPep8
         assert False == d.card_exists(one_alt)
         self.assertFalse(d.card_exists(Card('Five')))
 
@@ -213,11 +217,11 @@ class TestDeck(TestCase):
     def test__repr__(self):
         d = Deck()
         self.assertEqual('Deck(cards=0, discarded=0, reshuffle=True, name=None)',
-                               repr(d))
+                         repr(d))
         d = Deck(cards=[Card('One'), Card('Two'), Card('Three')], reshuffle=False, name='Deck')
         d.discard(Card('Four'))
         self.assertEqual('Deck(cards=3, discarded=1, reshuffle=False, name=Deck)',
-                               repr(d))
+                         repr(d))
 
     def test__str__named(self):
         d = Deck(name='SuperDeck')
