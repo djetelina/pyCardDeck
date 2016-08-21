@@ -1,0 +1,61 @@
+!!python/object:pyCardDeck.deck.Deck
+_cards:
+- !!python/object:pyCardDeck.cards.PokerCard {name: Seven of Spades, rank: '7', suit: Spades}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Four of Hearts, rank: '4', suit: Hearts}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Five of Clubs, rank: '5', suit: Clubs}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Six of Diamonds, rank: '6', suit: Diamonds}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Five of Spades, rank: '5', suit: Spades}
+- !!python/object:pyCardDeck.cards.PokerCard {name: King of Hearts, rank: K, suit: Hearts}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Jack of Diamonds, rank: J, suit: Diamonds}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Queen of Clubs, rank: Q, suit: Clubs}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Eight of Diamonds, rank: '8',
+  suit: Diamonds}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Seven of Clubs, rank: '7', suit: Clubs}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Two of Diamonds, rank: '2', suit: Diamonds}
+- !!python/object:pyCardDeck.cards.PokerCard {name: King of Clubs, rank: K, suit: Clubs}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Ace of Hearts, rank: A, suit: Hearts}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Ace of Clubs, rank: A, suit: Clubs}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Nine of Spades, rank: '9', suit: Spades}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Nine of Hearts, rank: '9', suit: Hearts}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Seven of Hearts, rank: '7', suit: Hearts}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Six of Spades, rank: '6', suit: Spades}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Two of Spades, rank: '2', suit: Spades}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Seven of Diamonds, rank: '7',
+  suit: Diamonds}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Eight of Spades, rank: '8', suit: Spades}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Three of Diamonds, rank: '3',
+  suit: Diamonds}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Three of Clubs, rank: '3', suit: Clubs}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Jack of Hearts, rank: J, suit: Hearts}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Jack of Spades, rank: J, suit: Spades}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Jack of Clubs, rank: J, suit: Clubs}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Eight of Hearts, rank: '8', suit: Hearts}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Ten of Hearts, rank: '10', suit: Hearts}
+- !!python/object:pyCardDeck.cards.PokerCard {name: King of Spades, rank: K, suit: Spades}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Four of Spades, rank: '4', suit: Spades}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Two of Clubs, rank: '2', suit: Clubs}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Nine of Clubs, rank: '9', suit: Clubs}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Three of Spades, rank: '3', suit: Spades}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Ace of Diamonds, rank: A, suit: Diamonds}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Six of Clubs, rank: '6', suit: Clubs}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Ace of Spades, rank: A, suit: Spades}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Queen of Spades, rank: Q, suit: Spades}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Three of Hearts, rank: '3', suit: Hearts}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Six of Hearts, rank: '6', suit: Hearts}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Ten of Spades, rank: '10', suit: Spades}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Nine of Diamonds, rank: '9', suit: Diamonds}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Four of Diamonds, rank: '4', suit: Diamonds}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Queen of Diamonds, rank: Q, suit: Diamonds}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Five of Diamonds, rank: '5', suit: Diamonds}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Eight of Clubs, rank: '8', suit: Clubs}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Four of Clubs, rank: '4', suit: Clubs}
+- !!python/object:pyCardDeck.cards.PokerCard {name: King of Diamonds, rank: K, suit: Diamonds}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Two of Hearts, rank: '2', suit: Hearts}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Ten of Diamonds, rank: '10', suit: Diamonds}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Five of Hearts, rank: '5', suit: Hearts}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Queen of Hearts, rank: Q, suit: Hearts}
+- !!python/object:pyCardDeck.cards.PokerCard {name: Ten of Clubs, rank: '10', suit: Clubs}
+_discard_pile: []
+_reshuffle: false
+_save_location: None
+name: "Standard Deck"

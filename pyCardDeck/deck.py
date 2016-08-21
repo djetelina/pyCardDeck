@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import logging
+import os
+import yaml
 # noinspection PyCompatibility
 # because we are installing it through pip
 from typing import List
@@ -37,6 +39,7 @@ class Deck:
             self._cards = []
         self._discard_pile = []
         self._reshuffle = reshuffle
+        self._save_location = None
 
     def draw(self) -> CardType:
         """
@@ -263,6 +266,81 @@ class Deck:
         """
         return self._cards[0:number]
 
+    def set_file_location(self, location):
+        """
+        Used to update the location
+        It will expand relative file path and ~ if it exists
+        The file path should be relative to the main script
+        A filename must be passed in as part of location
+
+        Example: ~/mydeck.yml
+
+        :param location: the location of the file
+        """
+
+        # I expanded the user and relative file paths so it's an absolute file path
+        self._save_location = os.path.abspath(os.path.expanduser(location))
+
+    def save(self, location=None):
+        """
+        Saves the current deck into a yaml format so the deck can be retrieved at a later date
+
+        Useful if a game wishes to close and re open at a later date
+
+        Location is only needed once as it wil be saved
+        If there is no location passed in the first time it will error
+
+        :param location:    this specifies a file location to save to
+        """
+        if location:
+            self.set_file_location(location)
+
+        if self._save_location is None:
+            raise Exception("No file location defined")
+
+        # setting the save location to None before saving
+        # this is so the file path is not save in the file
+        # only reason is so the original file path is never saved for security reasons
+        location = self._save_location
+        self._save_location = None
+
+        with open(location, 'w') as yaml_file:
+            yaml.dump(self, yaml_file)
+
+        # re applying the save location
+        self._save_location = location
+
+    def load(self, location=None):
+        """
+        Loads a deck into the deck
+        First time a location must be passed
+        This location value can then be used by both save and load
+        To overwrite simply pass in a new value
+
+        :param location:    this specifies the file location to load from
+        """
+        if location:
+            self.set_file_location(location)
+
+        if self._save_location is None:
+            raise Exception("No file location defined")
+
+        # I del save_location so self.save_location does not get overwritten
+        data = yaml.load(open(self._save_location)).__dict__
+        del data["_save_location"]
+        self.__dict__.update(data)
+
+    def load_standard_deck(self):
+        """
+        Loads a standard deck of 52 cards into the deck
+        """
+        location = os.path.join(os.path.dirname(__file__), "standard_deck.yml")
+
+        # removing save location so it is not overwritten
+        data = yaml.load(open(location)).__dict__
+        del data["_save_location"]
+        self.__dict__.update(data)
+
     @property
     def cards_left(self) -> int:
         """
@@ -298,6 +376,16 @@ class Deck:
             return False
         else:
             return True
+
+    @property
+    def file_location(self) -> str:
+        """
+        returns the file location of which current is loaded from/ will be saved to
+
+        :return:    file location
+        :rtype:     str
+        """
+        return self._save_location
 
     def __repr__(self) -> str:
         """
