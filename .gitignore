@@ -16,3 +16,4 @@ pyCardDeck.egg-info
 .coverage
 .cache
 *.pyc
+test*.yaml
