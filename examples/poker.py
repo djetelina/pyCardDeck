@@ -11,7 +11,13 @@ from typing import List
 from pyCardDeck.cards import PokerCard
 
 class Player:
-    hand = []
+
+    def __init__(self, name: str):
+        self.hand = []
+        self.name = name
+
+    def __str__(self):
+        return self.name
 
 
 class PokerTable:
@@ -48,7 +54,7 @@ class PokerTable:
         :param number:  How many cards to deal
         :type number:   int
         """
-        for i in range(0, number):
+        for _ in range(0, number):
             for player in self.players:
                 card = self.deck.draw()
                 player.hand.append(card)
@@ -62,7 +68,7 @@ class PokerTable:
         burned = self.deck.draw()
         self.deck.discard(burned)
         print("Burned a card: {}".format(burned))
-        for i in range(0, 3):
+        for _ in range(0, 3):
             card = self.deck.draw()
             self.table_cards.append(card)
             print("New card on the table: {}".format(card))
@@ -121,5 +127,5 @@ def generate_deck() -> List[PokerCard]:
     return cards
 
 if __name__ == '__main__':
-    table = PokerTable([Player(), Player(), Player()])
+    table = PokerTable([Player("Jack"), Player("John"), Player("Peter")])
     table.texas_holdem()

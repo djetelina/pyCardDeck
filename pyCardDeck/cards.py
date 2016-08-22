@@ -21,7 +21,7 @@ class BaseCard:
         return self.name
 
     def __repr__(self):
-        return '{0.__name__}({1.__dict__})'.format(type(self), self)
+        return '{0}({1.__dict__})'.format(type(self).__name__, self)
 
 
 class PokerCard(BaseCard):

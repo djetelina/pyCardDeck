@@ -16,7 +16,6 @@ __license__ = 'MIT'
 __copyright__ = 'Copyright 2016 David Jetelina'
 __version__ = '1.0.0.dev1'
 
-import logging
 from .deck import *
 from .errors import *
 from .cards import *
