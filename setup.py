@@ -25,7 +25,7 @@ class PyTest(TestCommand):
         sys.exit(errno)
 
 
-test_requirements = ['pytest>=2.8.0', 'pytest-cov']
+test_requirements = ['pytest>=3.0.0', 'pytest-cov']
 
 with open('README.rst', encoding='utf-8') as f:
     long_description = f.read()
@@ -55,7 +55,7 @@ setup(name='pyCardDeck',
       keywords='cards deck card game shuffle draw discard',
       packages=find_packages(exclude=['tests', 'docs', 'examples']),
       install_requires=[
-          'PyYAML',
+          'PyYAML>=3.11',
       ],
       cmdclass={'test': PyTest},
       tests_require=test_requirements

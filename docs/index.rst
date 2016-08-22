@@ -34,22 +34,22 @@ Deck
 Attributes
 ~~~~~~~~~~
 
-.. py:attribute:: pyCardDeck.deck.Deck.name
+.. py:attribute:: Deck.name
 
     :return: The name of the deck
     :rtype:  str
 
-.. py:attribute:: pyCardDeck.deck.Deck.reshuffle
+.. py:attribute:: Deck.reshuffle
 
     :return: Whether the deck will be reshuffled when drawn out
     :rtype:  bool
 
-.. py:attribute:: pyCardDeck.deck.Deck._cards
+.. py:attribute:: Deck._cards
 
     :return: Cards in the deck
     :rtype: list
 
-.. py:attribute:: pyCardDeck.deck.Deck._discard_pile
+.. py:attribute:: Deck._discard_pile
 
     .. note::
 
