@@ -53,8 +53,10 @@ setup(name='pyCardDeck',
           'Programming Language :: Python :: 3.5'
       ],
       keywords='cards deck card game shuffle draw discard',
-      packages=find_packages(exclude=['tests', 'docs']),
-      install_requires=[],
+      packages=find_packages(exclude=['tests', 'docs', 'examples']),
+      install_requires=[
+          'PyYAML',
+      ],
       cmdclass={'test': PyTest},
       tests_require=test_requirements
       )

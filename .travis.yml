@@ -4,4 +4,6 @@ python:
 - "3.4"
 - "3.5"
 install: "pip install -r requirements.txt"
-script: py.test --cov=codeclimate_test_reporter tests
+script:
+- py.test --cov=pyCardDeck tests
+- codeclimate-test-reporter --file .coverage
