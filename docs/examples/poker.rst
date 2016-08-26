@@ -5,7 +5,7 @@ Poker example
 This is a poker example of pyCardDeck, it's not meant to be complete poker script,
 but rather a showcase of pyCardDeck's usage.
 
-.. code-bloack:: python
+.. code-block:: python
 
     import pyCardDeck
     from typing import List
@@ -15,7 +15,7 @@ For python 3.3 and 3.4 compatibility and type hints, we import typing.List - thi
 the package itself and PokerCard are recommended here
 
 
-.. code-bloack:: python
+.. code-block:: python
 
     class Player:
 
@@ -41,7 +41,7 @@ the package itself and PokerCard are recommended here
 We define our Player class, to have a hand and a name, and our PokerTable which will hold all the information
 and will have following methods:
 
-.. code-bloack:: python
+.. code-block:: python
 
         def texas_holdem(self):
             """
@@ -62,7 +62,7 @@ and will have following methods:
 This is the core "loop" of Texas Hold'em
 
 
-.. code-bloack:: python
+.. code-block:: python
 
         def deal_cards(self, number: int):
             for _ in range(0, number):
@@ -74,7 +74,7 @@ This is the core "loop" of Texas Hold'em
 Dealer will go through all available players and deal them x number of cards.
 
 
-.. code-bloack:: python
+.. code-block:: python
 
         def flop(self):
             # Burn a card
@@ -89,7 +89,7 @@ Dealer will go through all available players and deal them x number of cards.
 
 Burns a card and then shows 3 new cards on the table
 
-.. code-bloack:: python
+.. code-block:: python
 
         def river_or_flop(self):
             burned = self.deck.draw()
@@ -102,7 +102,7 @@ Burns a card and then shows 3 new cards on the table
 
 Burns a card and then shows 1 new card on the table
 
-.. code-bloack:: python
+.. code-block:: python
 
         def cleanup(self):
             for player in self.players:
@@ -116,7 +116,7 @@ Burns a card and then shows 1 new card on the table
 
 Cleans up the table to gather all the cards back
 
-.. code-bloack:: python
+.. code-block:: python
 
     def generate_deck() -> List[PokerCard]:
         suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades']
@@ -143,7 +143,7 @@ Cleans up the table to gather all the cards back
 
 Function that generates the deck, instead of writing down 50 cards, we use iteration to generate the cards for use
 
-.. code-bloack:: python
+.. code-block:: python
 
     if __name__ == '__main__':
         table = PokerTable([Player("Jack"), Player("John"), Player("Peter")])
