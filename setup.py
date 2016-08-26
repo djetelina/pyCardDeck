@@ -25,7 +25,7 @@ class PyTest(TestCommand):
         sys.exit(errno)
 
 
-test_requirements = ['pytest>=3.0.0', 'pytest-cov']
+test_requirements = ['pytest>=3.0.1', 'pytest-cov']
 
 with open('README.rst', encoding='utf-8') as f:
     long_description = f.read()

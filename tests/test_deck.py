@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from unittest import TestCase
-from pyCardDeck import *
 import pytest
+from pyCardDeck import *
 
 
 class Card:
@@ -25,12 +24,15 @@ class DifferentCard(Card):
     Card object that's a different class than card
     """
 
+
 class ExportCard(Card):
     """
     Card object used for importing and exporting
     """
+
     def __eq__(self, other):
         return self.name == other
+
 
 def test_draw():
     d = Deck(cards=[
@@ -44,6 +46,8 @@ def test_draw():
         d.draw()
     assert True == d.empty
 
+
+# noinspection PyPep8
 def test_draw_bottom():
     d = Deck(cards=[
         Card('One'), Card('Two'), Card('Three'), Card('Four')
@@ -57,6 +61,7 @@ def test_draw_bottom():
     assert True == d.empty
 
 
+# noinspection PyPep8,PyPep8
 def test_draw_random():
     d = Deck(cards=[
         Card('One'), Card('Two'), Card('Three'), Card('Four')
@@ -70,6 +75,8 @@ def test_draw_random():
         d.draw_random()
     assert True == d.empty
 
+
+# noinspection PyPep8
 def test_draw_specific_instance():
     one = Card('One', specific_string="bbc")
     one_small = Card('one', specific_string="bbc")
@@ -91,10 +98,13 @@ def test_draw_specific_instance():
     with pytest.raises(NoCards):
         d.draw_specific(one_bare)
 
+
 def test_draw_specific_string():
     d = Deck(cards=['a', 'b', 'c', 'd'])
     assert d.draw_specific('a') == 'a'
 
+
+# noinspection PyPep8
 def test_draws_else():
     d = Deck()
     with pytest.raises(NoCards):
@@ -106,6 +116,7 @@ def test_draws_else():
     assert True == d.empty
 
 
+# noinspection PyPep8,PyPep8,PyPep8,PyPep8
 def test_draws_reshuffle():
     d = Deck(cards=[Card('One')])
     d.discard(Card('One'))
@@ -122,6 +133,7 @@ def test_draws_reshuffle():
     assert False == d.empty
 
 
+# noinspection PyPep8,PyPep8
 def test_card_exists_instance():
     one = Card('One', specific_string='bbc')
     one_alt = DifferentCard('One', specific_string='bbc')
@@ -137,6 +149,7 @@ def test_card_exists_instance():
     assert False == d.card_exists(Card('Five'))
 
 
+# noinspection PyPep8,PyPep8
 def test_card_exist_string():
     d = Deck(cards=['a', 'b', 'c', 'd'])
     assert True == d.card_exists('a')
@@ -240,62 +253,137 @@ def test__repr__():
 def test__str__named():
     d = Deck(name='SuperDeck')
     assert 'SuperDeck' == str(d)
+
+
 def test__str__():
     d = Deck()
     assert 'Deck of cards' == str(d)
 
 
+# noinspection PyProtectedMember,PyProtectedMember,PyProtectedMember,PyProtectedMember,PyProtectedMember,PyProtectedMember
 def test_yaml_import_export_ints():
     d = Deck(cards=[1, 2, 3, 4], name="Test yaml int")
-    d.save(location="test_int.yaml")
+    d.export(" yaMl ", to_file=True, location="tests/test_int.yaml")
     e = Deck()
-    e.load(location="test_int.yaml")
+    e.load("tests/test_int.yaml", is_file=True)
     assert e._cards == d._cards
     assert e._reshuffle == d._reshuffle
     assert e.name == d.name
 
 
+# noinspection PyProtectedMember,PyProtectedMember,PyProtectedMember,PyProtectedMember,PyProtectedMember
 def test_yaml_import_export_strings():
     d = Deck(cards=["one", "two", "three", 'four', '5', '6'], name="Test yaml str")
-    d.save(location="test_str.yaml")
+    d.export("YAML", to_file=True, location="tests/test_str.yaml")
     e = Deck()
-    e.load(location="test_str.yaml")
+    e.load("tests/test_str.yaml", is_file=True)
     assert e._cards == d._cards
     assert d._save_location == e.file_location
     assert e._reshuffle == d._reshuffle
     assert e.name == d.name
 
 
+# noinspection PyProtectedMember,PyProtectedMember,PyProtectedMember,PyProtectedMember
 def test_yaml_import_export_base_card():
     d = Deck(cards=[BaseCard("One"), BaseCard("Two"), BaseCard("Three"), BaseCard("Four")],
              name="Test yaml basecard")
-    d.save(location="test_basecard.yaml")
+    d.export("yaml ", to_file=True, location="tests/test_basecard.yaml")
     e = Deck()
-    e.load(location="test_basecard.yaml")
+    e.load("tests/test_basecard.yaml", is_file=True)
     assert e._cards[0].__dict__ == d._cards[0].__dict__
     assert e._reshuffle == d._reshuffle
     assert e.name == d.name
 
 
+# noinspection PyProtectedMember,PyProtectedMember,PyProtectedMember,PyProtectedMember
 def test_yaml_import_export_custom_card():
     d = Deck(cards=[ExportCard("One"), ExportCard("Two"), ExportCard("Three")], name="Test yaml custom")
-    d.save(location="test_custom.yaml")
+    d.export("   YaML", to_file=True, location="tests/test_custom.yaml")
     e = Deck(name="This will get overriden")
-    e.load(location="test_custom.yaml")
+    e.load("tests/test_custom.yaml", is_file=True)
     assert e._cards == d._cards
     assert e._reshuffle == d._reshuffle
     assert e.name == d.name
 
+
+# noinspection PyProtectedMember,PyProtectedMember,PyProtectedMember,PyProtectedMember
+def test_json_import_export_ints():
+    d = Deck(cards=[1, 2, 3, 4], name="Test json int")
+    d.export(" Json ", to_file=True, location="tests/test_int.json")
+    e = Deck()
+    e.load("tests/test_int.json", is_file=True)
+    assert e._cards == d._cards
+    assert e._reshuffle == d._reshuffle
+    assert e.name == d.name
+
+
+# noinspection PyProtectedMember,PyProtectedMember,PyProtectedMember,PyProtectedMember,PyProtectedMember
+def test_json_import_export_strings():
+    d = Deck(cards=["one", "two", "three", 'four', '5', '6'], name="Test json str")
+    d.export("jsON", to_file=True, location="tests/test_str.json")
+    e = Deck()
+    e.load("tests/test_str.json", is_file=True)
+    assert e._cards == d._cards
+    assert d._save_location == e.file_location
+    assert e._reshuffle == d._reshuffle
+    assert e.name == d.name
+
+
+# noinspection PyProtectedMember,PyProtectedMember,PyProtectedMember,PyProtectedMember
+def test_json_import_export_base_card():
+    d = Deck(cards=[BaseCard("One"), BaseCard("Two"), BaseCard("Three"), BaseCard("Four")],
+             name="Test json basecard")
+    d.export("jSon ", to_file=True, location="tests/test_basecard.json")
+    e = Deck()
+    e.load("tests/test_basecard.json", is_file=True)
+    assert e._cards[0].__dict__ == d._cards[0].__dict__
+    assert e._reshuffle == d._reshuffle
+    assert e.name == d.name
+
+
+# noinspection PyProtectedMember,PyProtectedMember,PyProtectedMember,PyProtectedMember
+def test_json_import_export_custom_card():
+    d = Deck(cards=[ExportCard("One"), ExportCard("Two"), ExportCard("Three")], name="Test json custom")
+    d.export("   json", to_file=True, location="tests/test_custom.json")
+    e = Deck(name="This will get overriden")
+    e.load("tests/test_custom.json", is_file=True)
+    assert e._cards == d._cards
+    assert e._reshuffle == d._reshuffle
+    assert e.name == d.name
+
+
+# noinspection PyProtectedMember,PyProtectedMember
 def test_import_standard():
     d = Deck()
-    d.load(location="pyCardDeck/standard_deck.yml")
+    d.load("pyCardDeck/standard_deck.yml", is_file=True)
     e = Deck()
     e.load_standard_deck()
     assert e._cards == d._cards
 
-def test_yaml_exceptions():
+
+def test_load_exception():
     d = Deck()
-    with pytest.raises(Exception):
-        d.load()
-    with pytest.raises(Exception):
-        d.save()
+    with pytest.raises(UnknownFormat):
+        d.load("")
+
+
+def test_export_exception():
+    d = Deck()
+    with pytest.raises(UnknownFormat):
+        d.export("")
+
+
+def test_json():
+    d = Deck()
+    d.load_standard_deck()
+    prop = d.json
+    export = d.export("json")
+    assert prop == export
+
+
+def test_yaml():
+    d = Deck()
+    d.load_standard_deck()
+    prop = d.yaml
+    export = d.export("yaml")
+    assert prop == export

@@ -35,3 +35,11 @@ class CardNotFound(DeckException):
     Exception that's thrown when a card is not found
     """
     pass
+
+
+class UnknownFormat(Exception):
+    """
+    Exception thrown when trying to export to a unknown format.
+    Supported formats: YaML, JSON
+    """
+    pass
