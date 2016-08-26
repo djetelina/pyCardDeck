@@ -514,6 +514,17 @@ def card_compare(card: CardType, second_card: CardType) -> bool:
 
 
 def get_exported_string(format_stripped: str, deck: Deck) -> str:
+    """
+    Helper function to Deck.export()
+
+    :param format_stripped:     Desired format stripped of any spaces and lowercase
+    :type format_stripped:      str
+    :param deck:                instance of a Deck
+    :type deck:                 :ref:`Deck`
+    :return:                    YAML/JSON string of the deck
+    :rtype:                     str
+    :raises UnknownFormat:      when it doesn't recognize format_stripped
+    """
     if format_stripped == "yaml" or format_stripped == "yml":
         exported = yaml.dump(deck)
         log.debug("Exported deck %r to a yaml string", deck)
