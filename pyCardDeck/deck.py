@@ -357,7 +357,7 @@ class Deck:
         try:
             result = jsonpickle.decode(loadable)
             log.debug("loading JSON")
-        except json.decoder.JSONDecodeError:
+        except (ValueError, json.decoder.JSONDecodeError):
             result = yaml.load(loadable)
             log.debug("loading YAML")
         try:
