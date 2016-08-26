@@ -5,7 +5,6 @@ import logging
 import os
 import yaml
 import jsonpickle
-import json
 # noinspection PyCompatibility
 # because we are installing it through pip
 from typing import List
