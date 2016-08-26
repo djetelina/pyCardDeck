@@ -44,10 +44,9 @@ def test_draw():
     assert d.draw().name == Card('Four').name
     with pytest.raises(OutOfCards):
         d.draw()
-    assert True == d.empty
+    assert d.empty
 
 
-# noinspection PyPep8
 def test_draw_bottom():
     d = Deck(cards=[
         Card('One'), Card('Two'), Card('Three'), Card('Four')
@@ -58,10 +57,9 @@ def test_draw_bottom():
     assert d.draw_bottom().name == Card('One').name
     with pytest.raises(OutOfCards):
         d.draw_bottom()
-    assert True == d.empty
+    assert d.empty
 
 
-# noinspection PyPep8,PyPep8
 def test_draw_random():
     d = Deck(cards=[
         Card('One'), Card('Two'), Card('Three'), Card('Four')
@@ -70,13 +68,12 @@ def test_draw_random():
     d.draw_random()
     d.draw_random()
     d.draw_random()
-    assert True == d.empty
+    assert d.empty
     with pytest.raises(OutOfCards):
         d.draw_random()
-    assert True == d.empty
+    assert d.empty
 
 
-# noinspection PyPep8
 def test_draw_specific_instance():
     one = Card('One', specific_string="bbc")
     one_small = Card('one', specific_string="bbc")
@@ -94,7 +91,7 @@ def test_draw_specific_instance():
     d.draw_specific(one_small)
     d.draw_specific(one_diff_string)
     d.draw_specific(one_bare)
-    assert True == d.empty
+    assert d.empty
     with pytest.raises(NoCards):
         d.draw_specific(one_bare)
 
@@ -104,7 +101,6 @@ def test_draw_specific_string():
     assert d.draw_specific('a') == 'a'
 
 
-# noinspection PyPep8
 def test_draws_else():
     d = Deck()
     with pytest.raises(NoCards):
@@ -113,27 +109,25 @@ def test_draws_else():
         d.draw_bottom()
     with pytest.raises(NoCards):
         d.draw_random()
-    assert True == d.empty
+    assert d.empty
 
 
-# noinspection PyPep8,PyPep8,PyPep8,PyPep8
 def test_draws_reshuffle():
     d = Deck(cards=[Card('One')])
     d.discard(Card('One'))
     d.draw_specific(Card('One'))
-    assert False == d.empty
+    assert not d.empty
     d.discard(Card('One'))
     d.draw()
-    assert False == d.empty
+    assert not d.empty
     d.discard(Card('One'))
     d.draw_bottom()
-    assert False == d.empty
+    assert not d.empty
     d.discard(Card('One'))
     d.draw_random()
-    assert False == d.empty
+    assert not d.empty
 
 
-# noinspection PyPep8,PyPep8
 def test_card_exists_instance():
     one = Card('One', specific_string='bbc')
     one_alt = DifferentCard('One', specific_string='bbc')
@@ -143,17 +137,16 @@ def test_card_exists_instance():
         Card('One', specific_string='car'),
         Card('One')
     ], reshuffle=False)
-    assert True == d.card_exists(one)
-    # noinspection PyPep8
-    assert False == d.card_exists(one_alt)
-    assert False == d.card_exists(Card('Five'))
+    assert d.card_exists(one)
+
+    assert not d.card_exists(one_alt)
+    assert not d.card_exists(Card('Five'))
 
 
-# noinspection PyPep8,PyPep8
 def test_card_exist_string():
     d = Deck(cards=['a', 'b', 'c', 'd'])
-    assert True == d.card_exists('a')
-    assert False == d.card_exists('z')
+    assert d.card_exists('a')
+    assert not d.card_exists('z')
 
 
 def test_shuffle():
@@ -244,10 +237,10 @@ def test_discarded():
 
 def test__repr__():
     d = Deck()
-    assert 'Deck(cards=0, discarded=0, reshuffle=True, name=None)', repr(d)
+    assert 'Deck(cards=0, discarded=0, reshuffle=True, name=None)', d.__repr__()
     d = Deck(cards=[Card('One'), Card('Two'), Card('Three')], reshuffle=False, name='Deck')
     d.discard(Card('Four'))
-    assert 'Deck(cards=3, discarded=1, reshuffle=False, name=Deck)', repr(d)
+    assert 'Deck(cards=3, discarded=1, reshuffle=False, name=Deck)', d.__repr__()
 
 
 def test__str__named():
