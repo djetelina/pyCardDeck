@@ -357,7 +357,8 @@ class Deck:
         try:
             result = jsonpickle.decode(loadable)
             log.debug("loading JSON")
-        except (ValueError, json.decoder.JSONDecodeError):
+        # When we try to catch a specific exception (JSONDecodeError), it doesn't exist in 3.3 and 3.4
+        except Exception as e:
             result = yaml.load(loadable)
             log.debug("loading YAML")
         try:
