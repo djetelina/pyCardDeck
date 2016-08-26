@@ -4,7 +4,7 @@ API
 .. automodule:: pyCardDeck
 
 Types
-=====
+-----
 
 pyCardDeck isn't strict about types. It's however nice to use Python 3's type annotations.
 That's why we have custom types set up when needed
@@ -12,22 +12,22 @@ That's why we have custom types set up when needed
 .. _CardType:
 
 CardType
---------
+~~~~~~~~
 
 Can be either instance of an object, string or an integer. Basically, it's important
 that they aren't bool or NoneType. It's however recommended to inherit from
 one of the classes in :ref:`Cards`
 
 Classes and Functions
-=====================
+---------------------
 
 Deck
-----
+~~~~
 
 .. autoclass:: pyCardDeck.deck.Deck
 
 Attributes
-~~~~~~~~~~
+^^^^^^^^^^
 
 .. py:attribute:: Deck.name
 
@@ -68,7 +68,7 @@ Attributes
 .. autoattribute:: pyCardDeck.deck.Deck.yaml
 
 Card drawing
-~~~~~~~~~~~~
+^^^^^^^^^^^^
 
 .. automethod:: pyCardDeck.deck.Deck.draw
 
@@ -79,12 +79,12 @@ Card drawing
 .. automethod:: pyCardDeck.deck.Deck.draw_specific
 
 Card information
-~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^
 
 .. automethod:: pyCardDeck.deck.Deck.card_exists
 
 Deck Manipulation
-~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^
 
 .. automethod:: pyCardDeck.deck.Deck.shuffle
 
@@ -99,7 +99,7 @@ Deck Manipulation
 .. automethod:: pyCardDeck.deck.Deck.show_top
 
 Import/Export
-~~~~~~~~~~~~~
+^^^^^^^^^^^^^
 
 .. automethod:: pyCardDeck.deck.Deck.export
 
@@ -108,7 +108,7 @@ Import/Export
 .. automethod:: pyCardDeck.deck.Deck.load_standard_deck
 
 Magic Methods
-~~~~~~~~~~~~~
+^^^^^^^^^^^^^
 
 .. automethod:: pyCardDeck.deck.Deck.__repr__
 
@@ -117,7 +117,7 @@ Magic Methods
 .. automethod:: pyCardDeck.deck.Deck.__len__
 
 Other Functions
-~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^
 
 .. autofunction:: pyCardDeck.deck.card_compare
 
@@ -126,7 +126,7 @@ Other Functions
 .. _Cards:
 
 Cards
------
+~~~~~
 
 These classes are only recommended to inherit from, feel free to use your own!
 
@@ -135,7 +135,7 @@ These classes are only recommended to inherit from, feel free to use your own!
 .. autoclass:: pyCardDeck.cards.PokerCard
 
 Exceptions
-----------
+~~~~~~~~~~
 
 .. automodule:: pyCardDeck.errors
 
