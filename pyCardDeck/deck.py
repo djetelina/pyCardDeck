@@ -416,15 +416,13 @@ class Deck:
         Alternative to Deck.export("yaml")
 
         :return:    yaml dump of the Deck
-        "rtype"     str
+        :rtype:     str
         """
         return self.export("yaml")
 
     @property
     def empty(self) -> bool:
         """
-
-
         :return:    Whether the deck is empty
         :rtype:     bool
         """
@@ -436,7 +434,7 @@ class Deck:
     @property
     def file_location(self) -> str:
         """
-        returns the file location of which current is loaded from/ will be saved to
+        Returns the file location of which current is loaded from/ will be saved to
 
         :return:    file location
         :rtype:     str
