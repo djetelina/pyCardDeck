@@ -6,7 +6,6 @@ We hope you'll find everything you'll ever need in here. If youn don't, why not 
 .. toctree::
    :maxdepth: 2
 
-   index
    api
    examples/poker
 
