@@ -1,19 +1,21 @@
 Poker example
 =============
 
+
+This is a poker example of pyCardDeck, it's not meant to be complete poker script,
+but rather a showcase of pyCardDeck's usage.
+
 .. code-bloack:: python
 
-    #!/usr/bin/env python3
-    # -*- coding: utf-8 -*-
-    """
-    This is a poker example of pyCardDeck, it's not meant to be complete poker script,
-    but rather a showcase of pyCardDeck's usage.
-    """
-
     import pyCardDeck
-    # noinspection PyCompatibility
     from typing import List
     from pyCardDeck.cards import PokerCard
+
+For python 3.3 and 3.4 compatibility and type hints, we import typing.List - this is not needed, however
+the package itself and PokerCard are recommended here
+
+
+.. code-bloack:: python
 
     class Player:
 
@@ -36,6 +38,11 @@ Poker example
             self.table_cards = []
             print("Created a table with {} players".format(len(self.players)))
 
+We define our Player class, to have a hand and a name, and our PokerTable which will hold all the information
+and will have following methods:
+
+.. code-bloack:: python
+
         def texas_holdem(self):
             """
             Basic Texas Hold'em game structure
@@ -52,23 +59,24 @@ Poker example
             # Imagine some more betting and winner decision here
             self.cleanup()
 
-        def deal_cards(self, number: int):
-            """
-            Dealer will go through all available players and deal them x number of cards.
+This is the core "loop" of Texas Hold'em
 
-            :param number:  How many cards to deal
-            :type number:   int
-            """
+
+.. code-bloack:: python
+
+        def deal_cards(self, number: int):
             for _ in range(0, number):
                 for player in self.players:
                     card = self.deck.draw()
                     player.hand.append(card)
                     print("Dealt {} to player {}".format(card, player))
 
+Dealer will go through all available players and deal them x number of cards.
+
+
+.. code-bloack:: python
+
         def flop(self):
-            """
-            Burns a card and then shows 3 new cards on the table
-            """
             # Burn a card
             burned = self.deck.draw()
             self.deck.discard(burned)
@@ -78,10 +86,12 @@ Poker example
                 self.table_cards.append(card)
                 print("New card on the table: {}".format(card))
 
+
+Burns a card and then shows 3 new cards on the table
+
+.. code-bloack:: python
+
         def river_or_flop(self):
-            """
-            Burns a card and then shows ! new card on the table
-            """
             burned = self.deck.draw()
             self.deck.discard(burned)
             print("Burned a card: {}".format(burned))
@@ -89,10 +99,12 @@ Poker example
             self.table_cards.append(card)
             print("New card on the table: {}".format(card))
 
+
+Burns a card and then shows 1 new card on the table
+
+.. code-bloack:: python
+
         def cleanup(self):
-            """
-            Cleans up the table to gather all the cards back
-            """
             for player in self.players:
                 for card in player.hand:
                     self.deck.discard(card)
@@ -102,14 +114,11 @@ Poker example
             print("Cleanup done")
 
 
-    def generate_deck() -> List[PokerCard]:
-        """
-        Function that generates the deck, instead of writing down 50 cards, we use iteration
-        to generate the cards for use
+Cleans up the table to gather all the cards back
 
-        :return:    List with all 50 poker playing cards
-        :rtype:     List[PokerCard]
-        """
+.. code-bloack:: python
+
+    def generate_deck() -> List[PokerCard]:
         suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades']
         ranks = {'A': 'Ace',
                  '2': 'Two',
@@ -129,8 +138,15 @@ Poker example
             for rank, name in ranks.items():
                 cards.append(PokerCard(suit, rank, name))
         print('Generated deck of cards for the table')
-        return cards
+        return cards\
+
+
+Function that generates the deck, instead of writing down 50 cards, we use iteration to generate the cards for use
+
+.. code-bloack:: python
 
     if __name__ == '__main__':
         table = PokerTable([Player("Jack"), Player("John"), Player("Peter")])
         table.texas_holdem()
+
+And finally this is how we start the "game"

@@ -75,7 +75,7 @@ class PokerTable:
 
     def river_or_flop(self):
         """
-        Burns a card and then shows ! new card on the table
+        Burns a card and then shows 1 new card on the table
         """
         burned = self.deck.draw()
         self.deck.discard(burned)
