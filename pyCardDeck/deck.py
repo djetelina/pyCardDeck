@@ -22,11 +22,11 @@ class Deck:
     :param cards:       | Use this parameter if you don't plan to register your cards another way
                         | Cards can be either an instance of a  object, string or an integer,
                         | the documentation will be calling this :ref:`CardType` (because of Python's rank hinting)
-    :rank cards:        List[:ref:`CardType`]
+    :type cards:        List[:ref:`CardType`]
     :param reshuffle:   Set reshuffle to false if you want your deck not to reshuffle after it's depleted
-    :rank reshuffle:    bool
+    :type reshuffle:    bool
     :param name:        Name of the deck, used when converting the Deck instance into string
-    :rank name:         string
+    :type name:         string
     """
 
     def __init__(self, cards: object = None, reshuffle: object = True, name: object = None):
@@ -125,7 +125,7 @@ class Deck:
             If you are using a string or an integer, don't worry about this!
 
         :param specific_card:   Card identical to the one you are looking for
-        :rank specific_card:    :ref:`CardType`
+        :type specific_card:    :ref:`CardType`
         :return:                Card from the list
         :rtype:                 :ref:`CardType`
         :raises OutOfCards:     when there are no cards in the deck
@@ -165,7 +165,7 @@ class Deck:
             If you are using a string or an integer, don't worry about this!
 
         :param card:    Card identical to the one you are looking for
-        :rank card:     :ref:`CardType`
+        :type card:     :ref:`CardType`
         :return:        | True if exists
                         | False if doesn't exist
         :rtype:         bool
@@ -178,7 +178,7 @@ class Deck:
         log.debug('Card %s exists in the deck: %s', card, found)
         return found
 
-    def shuffle(self):
+    def shuffle(self) -> None:
         """
         Randomizes the order of cards in the deck
 
@@ -191,7 +191,7 @@ class Deck:
             log.warning('You tried to shuffle an empty deck')
             raise NoCards('You tried to shuffle an empty deck')
 
-    def reshuffle_if_empty(self):
+    def reshuffle_if_empty(self) -> None:
         """
         Function that checks if the deck is out of cards and if reshuffle is true, it
         shuffles the discard pile back into the card pile
@@ -209,12 +209,12 @@ class Deck:
         self._discard_pile = []
         log.debug('Cards have been shuffled back from the discard pile')
 
-    def discard(self, card: CardType):
+    def discard(self, card: CardType) -> None:
         """
         Puts a card into the discard pile
 
         :param card:        Card to be discarded
-        :rank card:         :ref:`CardType`
+        :type card:         :ref:`CardType`
         :raises NotACard:   When you try to insert False/None into a discard pile
         """
         log.debug("Card being discarded: %s", card)
@@ -230,22 +230,31 @@ class Deck:
             raise NotACard('You tried to insert {} (rank({}) into a discard pile'
                            .format(card, type(card).__name__))
 
-    def add_single(self, card: CardType):
+    def add_single(self, card: CardType, position: int = False) -> None:
         """
-        Shuffles a single card into the active deck
+        Shuffles (or inserts) a single card into the active deck
 
-        :param card:    Card you want to shuffle in
-        :rank card:     :ref:`CardType`
+        :param card:        Card you want to insert
+        :type card:         :ref:`CardType`
+        :param position:    | If you want to let player insert card to a specific location, use position
+                            | where 0 = top of the deck, 1 = second card from top etc.
+                            | By default the position is random
+        :type position:     int
         """
-        self._cards.insert(randint(0, len(self._cards)), card)
-        log.debug('New card shuffled into the deck')
+        if str(position).isdigit:
+            self._cards.insert(position, card)
+            log.debug("Card %s inserted to position %i", card, position)
+            log.debug(self._cards)
+        else:
+            self._cards.insert(randint(0, len(self._cards)), card)
+            log.debug('Card %s shuffled into the deck', card)
 
-    def add_many(self, cards: List[CardType]):
+    def add_many(self, cards: List[CardType]) -> None:
         """
         Shuffles a list of cards into the deck
 
         :param cards:   Cards you want to shuffle in
-        :rank cards:    List[:ref:`CardType`]
+        :type cards:    List[:ref:`CardType`]
         """
         for card in cards:
             self.add_single(card)
@@ -261,13 +270,13 @@ class Deck:
         only the remaining cards
 
         :param number:      How many cards you want to show
-        :rank number:       int
+        :type number:       int
         :return:            Cards you want to show
         :rtype:             List[:ref:`CardType`]
         """
         return self._cards[0:number]
 
-    def set_file_location(self, location):
+    def set_file_location(self, location) -> None:
         """
         Used to update the location
         It will expand relative file path and ~ if it exists
@@ -328,7 +337,7 @@ class Deck:
         # We return the string either way, because why not?
         return exported
 
-    def load(self, to_load: str, is_file: bool = False):
+    def load(self, to_load: str, is_file: bool = False) -> None:
         """
         Way to override a deck instance with a saved deck from either yaml, JSON
         or a file with either of those.
@@ -345,7 +354,7 @@ class Deck:
         :type is_file:          bool
         :raises UnknownFormat:  When the entered yaml or json is not valid
         """
-        # I tried autoidentifying but it didn't work, everything could be a fiile so it would always accept it
+        # I tried auto identifying but it didn't work, everything could be a file so it would always accept it
         if is_file:
             self.set_file_location(to_load)
             with open(self._save_location, 'r') as file:
@@ -353,11 +362,12 @@ class Deck:
         else:
             loadable = to_load
         # This is not really an elegant solution, but it works
+        # noinspection PyBroadException
         try:
             result = jsonpickle.decode(loadable)
             log.debug("loading JSON")
         # When we try to catch a specific exception (JSONDecodeError), it doesn't exist in 3.3 and 3.4
-        except Exception as e:
+        except Exception as _:
             result = yaml.load(loadable)
             log.debug("loading YAML")
         try:
@@ -366,7 +376,7 @@ class Deck:
         except AttributeError:
             raise UnknownFormat
 
-    def load_standard_deck(self):
+    def load_standard_deck(self) -> None:
         """
         Loads a standard deck of 52 cards into the deck
         """
@@ -490,9 +500,9 @@ def card_compare(card: CardType, second_card: CardType) -> bool:
     that spawned them .
 
     :param card:                First card to match
-    :rank card:                 :ref:`CardType`
+    :type card:                 :ref:`CardType`
     :param second_card:         Second card to match
-    :rank second_card:          :ref:`CardType`
+    :type second_card:          :ref:`CardType`
     :return:                    Whether they are the same
     :rtype:                     bool
     """

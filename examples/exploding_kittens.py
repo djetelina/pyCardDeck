@@ -1,7 +1,4 @@
 import pyCardDeck
-# noinspection PyCompatibility
-from typing import List
-from types import FunctionType
 from pyCardDeck.cards import BaseCard
 from random import randrange
 
@@ -19,6 +16,17 @@ class Player:
     def take_turn_twice(self):
         self.turn()
         self.turn()
+
+    def nope_prompt(self) -> bool:
+        for card in self.hand:
+            if card.name == "Nope":
+                if input("Do you want to use your Nope card?").lower().startswith("y"):
+                    return True
+        return False
+
+    def insert_explode(self) -> int:
+        position = int(input("At which position from top do you want to insert Exploding Kitten back into the deck?"))
+        return position
 
 
 class KittenCard(BaseCard):
@@ -41,12 +49,12 @@ class ExplodeCard(KittenCard):
 class DefuseCard(KittenCard):
 
     def __init__(self, deck: pyCardDeck.deck, name: str  = "Defuse"):
-        super().__init__(name)
+        super().__init__(name, selfcast=True)
         self.deck = deck
 
     def effect(self, player: Player, target: Player):
-        # TODO specify where to shuffle, somehow lulz
-        self.deck.add_single(ExplodeCard())
+        position = player.insert_explode()
+        self.deck.add_single(ExplodeCard(), position=position)
 
 
 class TacocatCard(KittenCard):
@@ -132,7 +140,6 @@ class Game:
         pass
 
     def turn(self):
-        # TODO
         pass
 
     def prepare_cards(self):
@@ -146,8 +153,10 @@ class Game:
                 player.hand.append(self.deck.draw())
 
     def ask_for_nope(self):
+        noped = False
         for player in self.players:
-            pass
+            noped = player.nope_prompt()
+        return noped
 
     def add_explodes(self):
         print("Adding explodes to the deck")

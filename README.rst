@@ -44,14 +44,37 @@ Library aimed at anyone who wants to do any kind of deck manipulation in python.
 So probably game developers. The goal is to have the ultimate library for all of this,
 supporting all kinds of game types with clean and beautiful API - kind of like requests :)
 
+How to use
+----------
+
+First, install with pip::
+
+    pip install pyCardDeck
+
+Then use in your code::
+
+    import pyCardDeck
+
+    my_deck = pyCardDeck.Deck(cards=[1, 2, 3], name='My Awesome Deck')
+
+    my_deck.draw()
+
+For more elaborate examples check out `GitHub <https://github.com/iScrE4m/pyCardDeck/tree/master/examples>`_
+
 For developers
 --------------
 
 The library will support Python 3.3+, for requirements look at requirements.txt in the repository.
-Always aim to write clean and readable code, make sure your tests are passing, document in docstrings (rst format)
+
+This library should be very easy to contribute to for first timers. Nothing is sacred, File issues, contribute
+where you feel it's useful and fun for you!
+
+Always aim to write clean and readable code, make sure the tests are passing, document in docstrings (rst format)
 and when writing new modules, classes or functions, add them to docs (we are using Shpinx autodocs)
 
-Documentation
+Running tests
 ~~~~~~~~~~~~~
 
-http://pycarddeck.readthedocs.io/en/latest/?badge=latest
+To run tests enter the pyCardDeck directory and run::
+
+    py.test tests

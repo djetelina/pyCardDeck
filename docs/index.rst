@@ -8,6 +8,7 @@ We hope you'll find everything you'll ever need in here. If youn don't, why not 
 
    api
    examples/poker
+   examples/kittens
 
 
 Indices and tables

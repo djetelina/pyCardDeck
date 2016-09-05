@@ -182,12 +182,17 @@ def test_shuffle_back():
     assert len(d) == 4
 
 
+# noinspection PyProtectedMember
 def test_add_single():
     d = Deck(cards=[
         Card('One'), Card('Two'), Card('Three'), Card('Four')
     ], reshuffle=False)
     d.add_single(Card('Five'))
     assert len(d) == 5
+    six = Card('Six')
+    d.add_single(six, position=0)
+    assert len(d) == 6
+    assert d._cards[0] == six
 
 
 def test_add_many():
@@ -253,7 +258,7 @@ def test__str__():
     assert 'Deck of cards' == str(d)
 
 
-# noinspection PyProtectedMember,PyProtectedMember,PyProtectedMember,PyProtectedMember,PyProtectedMember,PyProtectedMember
+# noinspection PyProtectedMember,PyProtectedMember,PyProtectedMember,PyProtectedMember
 def test_yaml_import_export_ints():
     d = Deck(cards=[1, 2, 3, 4], name="Test yaml int")
     d.export(" yaMl ", to_file=True, location="tests/test_int.yaml")
@@ -292,7 +297,7 @@ def test_yaml_import_export_base_card():
 def test_yaml_import_export_custom_card():
     d = Deck(cards=[ExportCard("One"), ExportCard("Two"), ExportCard("Three")], name="Test yaml custom")
     d.export("   YaML", to_file=True, location="tests/test_custom.yaml")
-    e = Deck(name="This will get overriden")
+    e = Deck(name="This will get overridden")
     e.load("tests/test_custom.yaml", is_file=True)
     assert e._cards == d._cards
     assert e._reshuffle == d._reshuffle
@@ -338,7 +343,7 @@ def test_json_import_export_base_card():
 def test_json_import_export_custom_card():
     d = Deck(cards=[ExportCard("One"), ExportCard("Two"), ExportCard("Three")], name="Test json custom")
     d.export("   json", to_file=True, location="tests/test_custom.json")
-    e = Deck(name="This will get overriden")
+    e = Deck(name="This will get overridden")
     e.load("tests/test_custom.json", is_file=True)
     assert e._cards == d._cards
     assert e._reshuffle == d._reshuffle
