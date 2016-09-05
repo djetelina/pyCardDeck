@@ -29,7 +29,7 @@ class Deck:
     :rank name:         string
     """
 
-    def __init__(self, cards: List[CardType] = None, reshuffle: bool = True, name: str = None):
+    def __init__(self, cards: object = None, reshuffle: object = True, name: object = None):
         """
         Create the deck
         """
@@ -199,7 +199,7 @@ class Deck:
         if not len(self._cards) and self._reshuffle:
             self.shuffle_back()
 
-    def shuffle_back(self):
+    def shuffle_back(self) -> object:
         """
         Shuffles the discard pile back into the main pile
         """
