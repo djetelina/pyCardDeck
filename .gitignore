@@ -15,6 +15,7 @@ pyCardDeck.egg-info
 # Created while running/debugging
 .coverage
 .cache
+.tox
 *.pyc
 test*.yaml
 test*.json
