@@ -77,8 +77,4 @@ Running tests
 
 To run tests enter the pyCardDeck directory and run::
 
-    pip install tox
-    tox
-
-You might see some InterpreterNotFound errors, those are mostly fine,
-but if you want, you can set them all up :)
+    py.test tests

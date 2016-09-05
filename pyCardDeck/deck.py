@@ -241,7 +241,7 @@ class Deck:
                             | By default the position is random
         :type position:     int
         """
-        if str(position).isdigit:
+        if position is not False:
             self._cards.insert(position, card)
             log.debug("Card %s inserted to position %i", card, position)
             log.debug(self._cards)
