@@ -2,6 +2,7 @@ import pyCardDeck
 from pyCardDeck.cards import BaseCard
 from random import randrange
 
+
 class Player:
 
     def __init__(self):
@@ -48,7 +49,7 @@ class ExplodeCard(KittenCard):
 
 class DefuseCard(KittenCard):
 
-    def __init__(self, deck: pyCardDeck.deck, name: str  = "Defuse"):
+    def __init__(self, deck: pyCardDeck.deck, name: str = "Defuse"):
         super().__init__(name, selfcast=True)
         self.deck = deck
 
@@ -59,13 +60,13 @@ class DefuseCard(KittenCard):
 
 class TacocatCard(KittenCard):
 
-    def __init__(self, name: str  = "Tacocat"):
+    def __init__(self, name: str = "Tacocat"):
         super().__init__(name)
 
 
 class OverweightCard(KittenCard):
 
-    def __init__(self, name: str  = "Overweight Bikini Cat"):
+    def __init__(self, name: str = "Overweight Bikini Cat"):
         super().__init__(name)
 
 
@@ -167,9 +168,9 @@ class Game:
         self.deck.add_many([DefuseCard(self.deck) for _ in range(6 - len(self.players))])
 
     def play_card(self, card: KittenCard, player: Player = None, target: Player = None):
-        if card.selfcast and player == None:
+        if card.selfcast and player is None:
             raise Exception("You must pass a player who owns the card!")
-        if card.targetable and target == None:
+        if card.targetable and target is None:
             raise Exception("You must pass a target!")
         if not self.ask_for_nope():
             card.effect(player, target)
