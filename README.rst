@@ -57,7 +57,7 @@ Then use in your code::
 
     my_deck = pyCardDeck.Deck(cards=[1, 2, 3], name='My Awesome Deck')
 
-    my_deck.draw()
+    card = my_deck.draw()
 
 For more elaborate examples check out `GitHub <https://github.com/iScrE4m/pyCardDeck/tree/master/examples>`_
 

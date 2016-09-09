@@ -451,7 +451,7 @@ class Deck:
         """
         return self._save_location
 
-    def __repr__(self) -> str:
+    def __repr__(self) -> str: # pragma: no cover
         """
         Used for representation of the object
 

@@ -14,7 +14,7 @@ class Card:
         self.name = name
         self.specific_string = specific_string
 
-    def __repr__(self):
+    def __repr__(self): # pragma: no cover
         return "Card instance {0.name}, {0.specific_string}" \
             .format(self)
 
@@ -242,10 +242,10 @@ def test_discarded():
 
 def test__repr__():
     d = Deck()
-    assert 'Deck(cards=0, discarded=0, reshuffle=True, name=None)', d.__repr__()
+    assert 'Deck(cards=0, discarded=0, reshuffle=True, name=None)', repr(d)
     d = Deck(cards=[Card('One'), Card('Two'), Card('Three')], reshuffle=False, name='Deck')
     d.discard(Card('Four'))
-    assert 'Deck(cards=3, discarded=1, reshuffle=False, name=Deck)', d.__repr__()
+    assert 'Deck(cards=3, discarded=1, reshuffle=False, name=Deck)', repr(d)
 
 
 def test__str__named():
