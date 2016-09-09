@@ -21,6 +21,8 @@ one of the classes in :ref:`Cards`
 Classes and Functions
 ---------------------
 
+.. _Deck:
+
 Deck
 ~~~~
 
