@@ -121,9 +121,9 @@ Magic Methods
 Other Functions
 ^^^^^^^^^^^^^^^
 
-.. autofunction:: pyCardDeck.deck.card_compare
+.. autofunction:: pyCardDeck.deck._card_compare
 
-.. autofunction:: pyCardDeck.deck.get_exported_string
+.. autofunction:: pyCardDeck.deck._get_exported_string
 
 .. _Cards:
 

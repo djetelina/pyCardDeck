@@ -14,11 +14,11 @@ __title__ = 'pyCardDeck'
 __author__ = 'David Jetelina'
 __license__ = 'MIT'
 __copyright__ = 'Copyright 2016 David Jetelina'
-__version__ = '1.0.0.dev1'
+__version__ = '1.2.0'
 
 from .deck import *
 from .errors import *
 from .cards import *
-from logging import NullHandler
+import logging
 
-logging.getLogger(__name__).addHandler(NullHandler())
+logging.getLogger(__name__).addHandler(logging.NullHandler())

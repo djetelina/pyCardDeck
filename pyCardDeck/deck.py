@@ -9,7 +9,7 @@ import jsonpickle
 # because we are installing it through pip
 from typing import List
 from random import shuffle, randint, randrange
-from .errors import *
+from .errors import OutOfCards, NotACard, NoCards, CardNotFound, UnknownFormat
 from .cards import CardType
 
 log = logging.getLogger(__name__)
@@ -136,7 +136,7 @@ class Deck:
         if len(self._cards):
             found = False
             for available_card in self._cards:
-                if card_compare(specific_card, available_card):
+                if _card_compare(specific_card, available_card):
                     card = available_card
                     found = True
                     break
@@ -172,7 +172,7 @@ class Deck:
         """
         found = False
         for available_card in self._cards:
-            if card_compare(card, available_card):
+            if _card_compare(card, available_card):
                 found = True
                 break
         log.debug('Card %s exists in the deck: %s', card, found)
@@ -324,7 +324,7 @@ class Deck:
         self._save_location = None
 
         # Get the actual exported data
-        exported = get_exported_string(format_stripped, self)
+        exported = _get_exported_string(format_stripped, self)
 
         # Restore saved value
         self._save_location = temp_location
@@ -451,7 +451,7 @@ class Deck:
         """
         return self._save_location
 
-    def __repr__(self) -> str: # pragma: no cover
+    def __repr__(self) -> str:  # pragma: no cover
         """
         Used for representation of the object
 
@@ -493,7 +493,7 @@ class Deck:
         return len(self._cards)
 
 
-def card_compare(card: CardType, second_card: CardType) -> bool:
+def _card_compare(card: CardType, second_card: CardType) -> bool:
     """
     Function for comparing two cards. First it checks their `__eq__`,
     if that returns False, it checks `__dict__` and name of the Class
@@ -521,7 +521,7 @@ def card_compare(card: CardType, second_card: CardType) -> bool:
     return identity
 
 
-def get_exported_string(format_stripped: str, deck: Deck) -> str:
+def _get_exported_string(format_stripped: str, deck: Deck) -> str:
     """
     Helper function to Deck.export()
 
