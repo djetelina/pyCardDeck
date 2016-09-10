@@ -51,11 +51,15 @@ First, install with pip::
 
     pip install pyCardDeck
 
-Then use in your code::
+Then use in your code:
+
+.. code-block:: python
 
     import pyCardDeck
 
     my_deck = pyCardDeck.Deck(cards=[1, 2, 3], name='My Awesome Deck')
+
+    my_deck.shuffle()
 
     card = my_deck.draw()
 
