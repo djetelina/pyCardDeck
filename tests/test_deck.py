@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import pytest
+import os
 from pyCardDeck import *
 
 
@@ -261,9 +262,9 @@ def test__str__():
 # noinspection PyProtectedMember,PyProtectedMember,PyProtectedMember,PyProtectedMember
 def test_yaml_import_export_ints():
     d = Deck(cards=[1, 2, 3, 4], name="Test yaml int")
-    d.export(" yaMl ", to_file=True, location="tests/test_int.yaml")
+    d.export(" yaMl ", to_file=True, location="tests/temp/test_int.yaml")
     e = Deck()
-    e.load("tests/test_int.yaml", is_file=True)
+    e.load("tests/temp/test_int.yaml", is_file=True)
     assert e._cards == d._cards
     assert e._reshuffle == d._reshuffle
     assert e.name == d.name
@@ -272,9 +273,9 @@ def test_yaml_import_export_ints():
 # noinspection PyProtectedMember,PyProtectedMember,PyProtectedMember,PyProtectedMember,PyProtectedMember
 def test_yaml_import_export_strings():
     d = Deck(cards=["one", "two", "three", 'four', '5', '6'], name="Test yaml str")
-    d.export("YAML", to_file=True, location="tests/test_str.yaml")
+    d.export("YAML", to_file=True, location="tests/temp/test_str.yaml")
     e = Deck()
-    e.load("tests/test_str.yaml", is_file=True)
+    e.load("tests/temp/test_str.yaml", is_file=True)
     assert e._cards == d._cards
     assert d._save_location == e.file_location
     assert e._reshuffle == d._reshuffle
@@ -285,9 +286,9 @@ def test_yaml_import_export_strings():
 def test_yaml_import_export_base_card():
     d = Deck(cards=[BaseCard("One"), BaseCard("Two"), BaseCard("Three"), BaseCard("Four")],
              name="Test yaml basecard")
-    d.export("yaml ", to_file=True, location="tests/test_basecard.yaml")
+    d.export("yaml ", to_file=True, location="tests/temp/test_basecard.yaml")
     e = Deck()
-    e.load("tests/test_basecard.yaml", is_file=True)
+    e.load("tests/temp/test_basecard.yaml", is_file=True)
     assert e._cards[0].__dict__ == d._cards[0].__dict__
     assert e._reshuffle == d._reshuffle
     assert e.name == d.name
@@ -296,9 +297,9 @@ def test_yaml_import_export_base_card():
 # noinspection PyProtectedMember,PyProtectedMember,PyProtectedMember,PyProtectedMember
 def test_yaml_import_export_custom_card():
     d = Deck(cards=[ExportCard("One"), ExportCard("Two"), ExportCard("Three")], name="Test yaml custom")
-    d.export("   YaML", to_file=True, location="tests/test_custom.yaml")
+    d.export("   YaML", to_file=True, location="tests/temp/test_custom.yaml")
     e = Deck(name="This will get overridden")
-    e.load("tests/test_custom.yaml", is_file=True)
+    e.load("tests/temp/test_custom.yaml", is_file=True)
     assert e._cards == d._cards
     assert e._reshuffle == d._reshuffle
     assert e.name == d.name
@@ -307,9 +308,9 @@ def test_yaml_import_export_custom_card():
 # noinspection PyProtectedMember,PyProtectedMember,PyProtectedMember,PyProtectedMember
 def test_json_import_export_ints():
     d = Deck(cards=[1, 2, 3, 4], name="Test json int")
-    d.export(" Json ", to_file=True, location="tests/test_int.json")
+    d.export(" Json ", to_file=True, location="tests/temp/test_int.json")
     e = Deck()
-    e.load("tests/test_int.json", is_file=True)
+    e.load("tests/temp/test_int.json", is_file=True)
     assert e._cards == d._cards
     assert e._reshuffle == d._reshuffle
     assert e.name == d.name
@@ -318,9 +319,9 @@ def test_json_import_export_ints():
 # noinspection PyProtectedMember,PyProtectedMember,PyProtectedMember,PyProtectedMember,PyProtectedMember
 def test_json_import_export_strings():
     d = Deck(cards=["one", "two", "three", 'four', '5', '6'], name="Test json str")
-    d.export("jsON", to_file=True, location="tests/test_str.json")
+    d.export("jsON", to_file=True, location="tests/temp/test_str.json")
     e = Deck()
-    e.load("tests/test_str.json", is_file=True)
+    e.load("tests/temp/test_str.json", is_file=True)
     assert e._cards == d._cards
     assert d._save_location == e.file_location
     assert e._reshuffle == d._reshuffle
@@ -331,9 +332,9 @@ def test_json_import_export_strings():
 def test_json_import_export_base_card():
     d = Deck(cards=[BaseCard("One"), BaseCard("Two"), BaseCard("Three"), BaseCard("Four")],
              name="Test json basecard")
-    d.export("jSon ", to_file=True, location="tests/test_basecard.json")
+    d.export("jSon ", to_file=True, location="tests/temp/test_basecard.json")
     e = Deck()
-    e.load("tests/test_basecard.json", is_file=True)
+    e.load("tests/temp/test_basecard.json", is_file=True)
     assert e._cards[0].__dict__ == d._cards[0].__dict__
     assert e._reshuffle == d._reshuffle
     assert e.name == d.name
@@ -342,9 +343,9 @@ def test_json_import_export_base_card():
 # noinspection PyProtectedMember,PyProtectedMember,PyProtectedMember,PyProtectedMember
 def test_json_import_export_custom_card():
     d = Deck(cards=[ExportCard("One"), ExportCard("Two"), ExportCard("Three")], name="Test json custom")
-    d.export("   json", to_file=True, location="tests/test_custom.json")
+    d.export("   json", to_file=True, location="tests/temp/test_custom.json")
     e = Deck(name="This will get overridden")
-    e.load("tests/test_custom.json", is_file=True)
+    e.load("tests/temp/test_custom.json", is_file=True)
     assert e._cards == d._cards
     assert e._reshuffle == d._reshuffle
     assert e.name == d.name
