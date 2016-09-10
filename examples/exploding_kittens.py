@@ -23,6 +23,8 @@ class Player:
             if card.name == "Nope":
                 if input("Do you want to use your Nope card?").lower().startswith("y"):
                     return True
+                else:
+                    return False
         return False
 
     def insert_explode(self) -> int:
@@ -168,14 +170,23 @@ class Game:
         self.deck.add_many([DefuseCard(self.deck) for _ in range(6 - len(self.players))])
 
     def play_card(self, card: KittenCard, player: Player = None, target: Player = None):
-        if card.selfcast and player is None:
-            raise Exception("You must pass a player who owns the card!")
-        if card.targetable and target is None:
-            raise Exception("You must pass a target!")
+        try:
+            check_play_required(card, player, target)
+        except Exception as e:
+            print(e)
+            return
         if not self.ask_for_nope():
             card.effect(player, target)
         else:
             print("Card was noped :(")
+
+
+def check_play_required(card: KittenCard, player: Player = None, target: Player = None):
+        if card.selfcast and player is None:
+            raise Exception("You must pass a player who owns the card!")
+        if card.targetable and target is None:
+            raise Exception("You must pass a target!")
+
 
 
 def construct_deck(game: Game):
