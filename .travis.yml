@@ -1,10 +1,13 @@
 os:
 - linux
+sudo: false
 language: python
 python:
 - "3.3"
 - "3.4"
 - "3.5"
 - "pypy3"
+- "pypy3.3-5.2-alpha1"
+- "nightly"
 install: pip install tox-travis
 script: tox
