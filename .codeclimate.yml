@@ -8,8 +8,6 @@ engines:
     enabled: true
   radon:
     enabled: true
-  pep8:
-    enabled: true
 ratings:
   paths:
   - "pyCardDeck/**.py"
