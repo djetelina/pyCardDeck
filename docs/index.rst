@@ -7,8 +7,7 @@ We hope you'll find everything you'll ever need in here. If youn don't, why not 
    :maxdepth: 2
 
    api
-   examples/poker
-   examples/kittens
+   examples/examples
 
 
 Indices and tables
