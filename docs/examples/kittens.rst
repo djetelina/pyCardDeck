@@ -180,7 +180,7 @@ file an issue!
 
         def play_card(self, card: KittenCard, player: Player = None, target: Player = None):
             try:
-                check_play_required(card, player, target)
+                _validate_play_arguments(card, player, target)
             except Exception as e:
                 print(e)
                 return
@@ -190,11 +190,11 @@ file an issue!
                 print("Card was noped :(")
 
 
-    def check_play_required(card: KittenCard, player: Player = None, target: Player = None):
-            if card.selfcast and player is None:
-                raise Exception("You must pass a player who owns the card!")
-            if card.targetable and target is None:
-                raise Exception("You must pass a target!")
+    def _validate_play_arguments(card: KittenCard, player: Player = None, target: Player = None):
+        if card.selfcast and player is None:
+            raise Exception("You must pass a player who owns the card!")
+        if card.targetable and target is None:
+            raise Exception("You must pass a target!")
 
 
 
