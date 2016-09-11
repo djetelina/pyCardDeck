@@ -8,6 +8,9 @@ engines:
     enabled: true
   radon:
     enabled: true
+    config:
+      threshold: "C"
+
 ratings:
   paths:
   - "pyCardDeck/**.py"

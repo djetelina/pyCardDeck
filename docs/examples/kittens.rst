@@ -179,22 +179,14 @@ file an issue!
             self.deck.add_many([DefuseCard(self.deck) for _ in range(6 - len(self.players))])
 
         def play_card(self, card: KittenCard, player: Player = None, target: Player = None):
-            try:
-                _validate_play_arguments(card, player, target)
-            except Exception as e:
-                print(e)
-                return
-            if not self.ask_for_nope():
+            if card.selfcast and player is None:
+                raise Exception("You must pass a player who owns the card!")
+            elif card.targetable and target is None:
+                raise Exception("You must pass a target!")
+            elif not self.ask_for_nope():
                 card.effect(player, target)
             else:
                 print("Card was noped :(")
-
-
-    def _validate_play_arguments(card: KittenCard, player: Player = None, target: Player = None):
-        if card.selfcast and player is None:
-            raise Exception("You must pass a player who owns the card!")
-        if card.targetable and target is None:
-            raise Exception("You must pass a target!")
 
 
 
