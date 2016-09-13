@@ -4,6 +4,9 @@ from setuptools.command.test import test as TestCommand
 from codecs import open
 import sys
 
+if sys.version_info.major < 3:
+    sys.exit('Python 2 is not supported')
+
 
 # noinspection PyCallByClass,PyAttributeOutsideInit
 class PyTest(TestCommand):
@@ -26,6 +29,10 @@ class PyTest(TestCommand):
 
 
 test_requirements = ['pytest>=3.0.1', 'pytest-cov>=2.3.1']
+
+requirements = ['PyYAML>=3.11', 'jsonpickle>=0.9.3']
+if sys.version_info.minor < 5:
+    requirements.append('typing>=3.5.2.2')
 
 with open('README.rst', encoding='utf-8') as f:
     long_description = f.read()
@@ -54,9 +61,7 @@ setup(name='pyCardDeck',
       ],
       keywords='cards deck card game shuffle draw discard',
       packages=find_packages(exclude=['tests', 'docs', 'examples']),
-      install_requires=[
-          'PyYAML>=3.11', 'jsonpickle>=0.9.3',
-      ],
+      install_requires=requirements,
       cmdclass={'test': PyTest},
       tests_require=test_requirements
       )
