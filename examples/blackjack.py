@@ -88,17 +88,20 @@ class BlackjackGame:
         and reports them as the winner.
         """
         winners = []
-        win_score = max(self.scores.values())
-        for key in self.scores.keys():
-            if self.scores[key] == win_score:
-                winners.append(key)
-            else:
-                None
-        winstring = " & ".join(winners)
-        if winstring == '':
-            print("Whoops! Everybody lost!")
-        else:
+        try:
+            win_score = max(self.scores.values())
+            for key in self.scores.keys():
+                if self.scores[key] == win_score:
+                    winners.append(key)
+                else:
+                    None
+            winstring = " & ".join(winners)
+            # if winstring == '':
+                # print("Whoops! Everybody lost!")
+            # else:
             print("And the winner is...{}!".format(winstring))
+        except ValueError:
+            print("Whoops! Everybody lost!")
 
     def deal(self):
         """
@@ -177,6 +180,6 @@ def generate_deck() -> List[PokerCard]:
     return cards
 
 if __name__ == "__main__":
-    game = BlackjackGame([Player("Kit"), Player("Anya"), Player("Iris"),
-        Player("Simon")])
+    game = BlackjackGame([Player("Kit")]) #, Player("Anya"), Player("Iris"),
+        # Player("Simon")])
     game.blackjack()
