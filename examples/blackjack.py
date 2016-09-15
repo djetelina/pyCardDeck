@@ -100,7 +100,7 @@ class BlackjackGame:
         print("   Drew the {}.".format(str(newcard)))
 
 
-def sum_hand(hand):
+def sum_hand(hand: list): 
     # hand = player.hand
     vals = [card.rank for card in hand]
     for i in range(0, len(vals)):
