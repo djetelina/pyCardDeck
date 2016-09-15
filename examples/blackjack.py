@@ -96,9 +96,6 @@ class BlackjackGame:
                 else:
                     None
             winstring = " & ".join(winners)
-            # if winstring == '':
-                # print("Whoops! Everybody lost!")
-            # else:
             print("And the winner is...{}!".format(winstring))
         except ValueError:
             print("Whoops! Everybody lost!")
@@ -180,6 +177,6 @@ def generate_deck() -> List[PokerCard]:
     return cards
 
 if __name__ == "__main__":
-    game = BlackjackGame([Player("Kit")]) #, Player("Anya"), Player("Iris"),
-        # Player("Simon")])
+    game = BlackjackGame([Player("Kit"), Player("Anya"), Player("Iris"),
+        Player("Simon")])
     game.blackjack()
