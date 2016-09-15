@@ -7,17 +7,15 @@ as a complete game.
 
 import sys
 import pyCardDeck
-# noinspection PyCompatibility
 from typing import List
 from pyCardDeck.cards import PokerCard
-# from pyCardDeck.examples import poker #generate_deck
 
+# Copy-pasted from examples/poker.py
 class Player:
 
     def __init__(self, name: str):
         self.hand = []
         self.name = name
-        # self.playing = True
 
     def __str__(self):
         return self.name
@@ -30,12 +28,18 @@ class BlackjackGame:
             name='Poker deck',
             reshuffle=False)
         self.players = players
-        # self.table_cards = []
         self.scores = {}
-        # self.winners = []
-        print("Created a game with {} players".format(len(self.players)))
+        print("Created a game with {} players.".format(len(self.players)))
 
     def blackjack(self):
+        """
+        The main blackjack game sequence.
+
+        Each player takes an entire turn before moving on.
+
+        If each player gets a turn and no one has won, the player or players
+        with the highest score below 21 are declared the winner.
+        """
         print("Setting up...")
         print("Shuffling...")
         self.deck.shuffle()
@@ -47,10 +51,21 @@ class BlackjackGame:
             print("{}'s turn...".format(player.name))
             self.play(player)
         else:
-            print("That's the last turn. Calculating the winner...")
+            print("That's the last turn. Determining the winner...")
             self.find_winner()
 
     def play(self, player):
+        """
+        An individual player's turn.
+
+        If the player's cards are an ace and a ten or court card,
+        the player has a blackjack and wins.
+
+        If a player's cards total more than 21, the player loses.
+
+        Otherwise, it takes the sum of their cards and determines whether
+        to hit or stand based on their current score.
+        """
         while True:
             points = sum_hand(player.hand)
             # print("   Current score: {}".format(str(points)))
@@ -71,6 +86,10 @@ class BlackjackGame:
                 break
 
     def find_winner(self):
+        """
+        Finds the highest score, then finds which player(s) have that score,
+        and reports them as the winner.
+        """
         winners = []
         win_score = max(self.scores.values())
         for key in self.scores.keys():
@@ -85,6 +104,9 @@ class BlackjackGame:
             print("And the winner is...{}!".format(winstring))
 
     def deal(self):
+        """
+        Deals two cards to each player.
+        """
         i = 1
         while i <= 2:
             for p in self.players:
@@ -95,13 +117,21 @@ class BlackjackGame:
 
 
     def hit(self, player):
+        """
+        Adds a card to the player's hand and states which card was drawn.
+        """
         newcard = self.deck.draw()
         player.hand.append(newcard)
         print("   Drew the {}.".format(str(newcard)))
 
 
-def sum_hand(hand: list): 
-    # hand = player.hand
+def sum_hand(hand: list):
+    """
+    Converts ranks of cards into point values for scoring purposes.
+    'K', 'Q', and 'J' are converted to 10.
+    'A' is converted to 1 (for simplicity), but if the first hand is an ace
+    and a 10-valued card, the player wins with a blackjack.
+    """
     vals = [card.rank for card in hand]
     for i in range(0, len(vals)):
         try:
@@ -146,10 +176,10 @@ def generate_deck() -> List[PokerCard]:
     for suit in suits:
         for rank, name in ranks.items():
             cards.append(PokerCard(suit, rank, name))
-    print('Generated deck of cards for the table')
+    print('Generated deck of cards for the table.')
     return cards
 
 if __name__ == "__main__":
-    game = BlackjackGame([Player("Davar"), Player("Squiggletoe"),
-        Player("Knife Emoji"), Player("Simon")])
+    game = BlackjackGame([Player("Kit"), Player("Anya"), Player("Iris"),
+        Player("Simon")])
     game.blackjack()
