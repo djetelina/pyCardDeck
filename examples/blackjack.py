@@ -68,17 +68,14 @@ class BlackjackGame:
         """
         while True:
             points = sum_hand(player.hand)
-            # print("   Current score: {}".format(str(points)))
             if points < 17:
                 print("   Hit.")
                 self.hit(player)
             elif points == 21:
                 print("   {} wins!".format(player.name))
-                # break
                 sys.exit(0) # End if someone wins
             elif points > 21:
                 print("   Bust!")
-                # player.playing = False
                 break
             else:  # Stand if between 17 and 20 (inclusive)
                 print("   Standing at {} points.".format(str(points)))
