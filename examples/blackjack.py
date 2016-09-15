@@ -9,8 +9,8 @@ import sys
 import pyCardDeck
 # noinspection PyCompatibility
 from typing import List
-# from pyCardDeck.cards import PokerCard
-from pyCardDeck.examples import poker #generate_deck
+from pyCardDeck.cards import PokerCard
+# from pyCardDeck.examples import poker #generate_deck
 
 class Player:
 
@@ -26,7 +26,7 @@ class BlackjackGame:
 
     def __init__(self, players: List[Player]):
         self.deck = pyCardDeck.Deck(
-            cards=poker.generate_deck(),
+            cards=generate_deck(),
             name='Poker deck',
             reshuffle=False)
         self.players = players
@@ -50,7 +50,7 @@ class BlackjackGame:
             print("That's the last turn. Calculating the winner...")
             self.find_winner()
 
-    def play(self):
+    def play(self, player):
         while True:
             points = sum_hand(player.hand)
             print("\tCurrent score: {}".format(str(points)))
@@ -70,6 +70,9 @@ class BlackjackGame:
                 self.scores[player.name] = points
                 break
 
+    def find_winner(self):
+        win_score = max(self.scores.values())
+        for key in self.scores.keys():
             if self.scores[key] == win_score:
                 winners.append(key)
             else:
@@ -85,8 +88,8 @@ class BlackjackGame:
         while i <= 2:
             for p in self.players:
                 newcard = self.deck.draw()
-                self.players.hand.append(newcard)
-                print("Dealt {} a {}.".format(p, str(newcard)))
+                p.hand.append(newcard)
+                print("Dealt {} a {}.".format(p.name, str(newcard)))
             i += 1
 
 
@@ -112,3 +115,38 @@ def sum_hand(hand):
         return(21)
     else:
         return(sum(vals))
+
+# Copy-pasted from examples/poker.py
+def generate_deck() -> List[PokerCard]:
+    """
+    Function that generates the deck, instead of writing down 50 cards, we use iteration
+    to generate the cards for use
+
+    :return:    List with all 50 poker playing cards
+    :rtype:     List[PokerCard]
+    """
+    suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades']
+    ranks = {'A': 'Ace',
+             '2': 'Two',
+             '3': 'Three',
+             '4': 'Four',
+             '5': 'Five',
+             '6': 'Six',
+             '7': 'Seven',
+             '8': 'Eight',
+             '9': 'Nine',
+             '10': 'Ten',
+             'J': 'Jack',
+             'Q': 'Queen',
+             'K': 'King'}
+    cards = []
+    for suit in suits:
+        for rank, name in ranks.items():
+            cards.append(PokerCard(suit, rank, name))
+    print('Generated deck of cards for the table')
+    return cards
+
+if __name__ == "__main__":
+    game = BlackjackGame([Player("Davar"), Player("Squiggletoe"),
+        Player("Knife Emoji"), Player("Simon")])
+    game.blackjack()
