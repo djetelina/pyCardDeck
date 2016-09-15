@@ -53,24 +53,25 @@ class BlackjackGame:
     def play(self, player):
         while True:
             points = sum_hand(player.hand)
-            print("\tCurrent score: {}".format(str(points)))
+            # print("   Current score: {}".format(str(points)))
             if points < 17:
-                print("\tHit.")
-                hit(player)
+                print("   Hit.")
+                self.hit(player)
             elif points == 21:
-                print("\t{} wins!".format(player.name))
+                print("   {} wins!".format(player.name))
                 # break
                 sys.exit(0) # End if someone wins
             elif points > 21:
-                print("\tBust!")
+                print("   Bust!")
                 # player.playing = False
                 break
             else:  # Stand if between 17 and 20 (inclusive)
-                print("\tStanding at {} points.".format(str(points)))
+                print("   Standing at {} points.".format(str(points)))
                 self.scores[player.name] = points
                 break
 
     def find_winner(self):
+        winners = []
         win_score = max(self.scores.values())
         for key in self.scores.keys():
             if self.scores[key] == win_score:
@@ -89,14 +90,14 @@ class BlackjackGame:
             for p in self.players:
                 newcard = self.deck.draw()
                 p.hand.append(newcard)
-                print("Dealt {} a {}.".format(p.name, str(newcard)))
+                print("Dealt {} the {}.".format(p.name, str(newcard)))
             i += 1
 
 
-def hit(player):
-    newcard = self.deck.draw()
-    self.players.hand.append(newcard)
-    print("\tDrew a {}.".format(p, str(newcard)))
+    def hit(self, player):
+        newcard = self.deck.draw()
+        player.hand.append(newcard)
+        print("   Drew the {}.".format(str(newcard)))
 
 
 def sum_hand(hand):
@@ -105,16 +106,18 @@ def sum_hand(hand):
     for i in range(0, len(vals)):
         try:
             vals[i] = int(vals[i])
-        except TypeError:
+        except ValueError:
             if vals[i] in ['K', 'Q', 'J']:
                 vals[i] = 10
             elif vals[i] == 'A':
                 vals[i] = 1  # Keep it simple for the sake of example
-    if vals == [1, 10] or [10, 1]:
-        print("\tBlackjack!")
+    if vals == [1, 10] or vals == [10, 1]:
+        print("   Blackjack!")
         return(21)
     else:
-        return(sum(vals))
+        points = sum(vals)
+        print("   Current score: {}".format(str(points)))
+        return(points)
 
 # Copy-pasted from examples/poker.py
 def generate_deck() -> List[PokerCard]:
