@@ -42,9 +42,9 @@ class PyTestCov(Command):
         pass
 
     def run(self):
-        errno = call(["py.test", "--cov=pyCardDeck", "--durations=10", "tests"], shell=True)
+        errno = call(["py.test --cov=pyCardDeck --durations=10 tests"], shell=True)
         if os.getenv("TRAVIS_PULL_REQUEST") == "false":
-            call(["codeclimate_test_reporter", "--file", ".coverage"], shell=True)
+            call(["codeclimate_test_reporter --file .coverage"], shell=True)
         raise SystemExit(errno)
 
 
