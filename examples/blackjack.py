@@ -131,19 +131,21 @@ def sum_hand(hand: list):
     and a 10-valued card, the player wins with a blackjack.
     """
     vals = [card.rank for card in hand]
-    for i in range(0, len(vals)):
+    intvals = []
+    while len(vals) > 0:
+        value = vals.pop()
         try:
-            vals[i] = int(vals[i])
+            intvals.append(int(value))
         except ValueError:
-            if vals[i] in ['K', 'Q', 'J']:
-                vals[i] = 10
-            elif vals[i] == 'A':
-                vals[i] = 1  # Keep it simple for the sake of example
-    if vals == [1, 10] or vals == [10, 1]:
+            if value in ['K', 'Q', 'J']:
+                intvals.append(10)
+            elif value == 'A':
+                intvals.append(1)  # Keep it simple for the sake of example
+    if intvals == [1, 10] or intvals == [10, 1]:
         print("   Blackjack!")
         return(21)
     else:
-        points = sum(vals)
+        points = sum(intvals)
         print("   Current score: {}".format(str(points)))
         return(points)
 
