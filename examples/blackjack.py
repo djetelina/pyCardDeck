@@ -94,7 +94,7 @@ class BlackjackGame:
                 if self.scores[key] == win_score:
                     winners.append(key)
                 else:
-                    None
+                    pass
             winstring = " & ".join(winners)
             print("And the winner is...{}!".format(winstring))
         except ValueError:
@@ -104,13 +104,14 @@ class BlackjackGame:
         """
         Deals two cards to each player.
         """
-        i = 1
-        while i <= 2:
+        # i = 1
+        # while i <= 2:
+        for _ in range(2):
             for p in self.players:
                 newcard = self.deck.draw()
                 p.hand.append(newcard)
                 print("Dealt {} the {}.".format(p.name, str(newcard)))
-            i += 1
+            # i += 1
 
 
     def hit(self, player):
