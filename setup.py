@@ -1,7 +1,10 @@
 from setuptools import setup, find_packages
 # noinspection PyPep8Naming
 from setuptools.command.test import test as TestCommand
+from setuptools import Command
+from subprocess import call
 from codecs import open
+import os
 import sys
 
 if sys.version_info.major < 3:
@@ -28,7 +31,24 @@ class PyTest(TestCommand):
         sys.exit(errno)
 
 
-test_requirements = ['pytest>=3.0.1', 'pytest-cov>=2.3.1']
+class PyTestCov(Command):
+    description = "run tests and report them to codeclimate"
+    user_options= []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        errno = call(["py.test --cov=pyCardDeck --durations=10 tests"], shell=True)
+        if os.getenv("TRAVIS_PULL_REQUEST") == "false":
+            call(["python -m codeclimate_test_reporter --file .coverage"], shell=True)
+        raise SystemExit(errno)
+
+
+test_requirements = ['pytest>=3.0.1', 'pytest-cov>=2.3.1', 'codeclimate-test-reporter>=0.1.2']
 
 requirements = ['PyYAML>=3.11', 'jsonpickle>=0.9.3']
 if sys.version_info.minor < 5:
@@ -62,6 +82,6 @@ setup(name='pyCardDeck',
       keywords='cards deck card game shuffle draw discard',
       packages=find_packages(exclude=['tests', 'docs', 'examples']),
       install_requires=requirements,
-      cmdclass={'test': PyTest},
+      cmdclass={'test': PyTest, 'testcov': PyTestCov},
       tests_require=test_requirements
       )

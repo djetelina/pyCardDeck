@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import pytest
-import os
+
 from pyCardDeck import *
 
 
@@ -15,7 +15,7 @@ class Card:
         self.name = name
         self.specific_string = specific_string
 
-    def __repr__(self): # pragma: no cover
+    def __repr__(self):  # pragma: no cover
         return "Card instance {0.name}, {0.specific_string}" \
             .format(self)
 

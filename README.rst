@@ -30,10 +30,7 @@ Status
                :target: https://codeclimate.com/github/iScrE4m/pyCardDeck/coverage
                :alt: Test Coverage
     * - Code Quality
-      -     .. image:: https://landscape.io/github/iScrE4m/pyCardDeck/master/landscape.svg?style=flat
-               :target: https://landscape.io/github/iScrE4m/pyCardDeck/master
-               :alt: Code Health
-            .. image:: https://codeclimate.com/github/iScrE4m/pyCardDeck/badges/gpa.svg
+      -     .. image:: https://codeclimate.com/github/iScrE4m/pyCardDeck/badges/gpa.svg
                :target: https://codeclimate.com/github/iScrE4m/pyCardDeck
                :alt: Code Climate
             .. image:: https://codeclimate.com/github/iScrE4m/pyCardDeck/badges/issue_count.svg
@@ -82,3 +79,4 @@ Running tests
 To run tests enter the pyCardDeck directory and run::
 
     py.test tests
+
