@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-This is a blackjack game made with pyCardDeck, meant as an example rather than
-as a complete game.
+This is an example of pyCardDeck, it's not meant to be complete poker script,
+but rather a showcase of pyCardDeck's usage.
 """
 
 import sys
@@ -10,7 +10,6 @@ import pyCardDeck
 from typing import List
 from pyCardDeck.cards import PokerCard
 
-# Copy-pasted from examples/poker.py
 class Player:
 
     def __init__(self, name: str):
@@ -104,14 +103,11 @@ class BlackjackGame:
         """
         Deals two cards to each player.
         """
-        # i = 1
-        # while i <= 2:
         for _ in range(2):
             for p in self.players:
                 newcard = self.deck.draw()
                 p.hand.append(newcard)
                 print("Dealt {} the {}.".format(p.name, str(newcard)))
-            # i += 1
 
 
     def hit(self, player):
@@ -149,7 +145,6 @@ def sum_hand(hand: list):
         print("   Current score: {}".format(str(points)))
         return(points)
 
-# Copy-pasted from examples/poker.py
 def generate_deck() -> List[PokerCard]:
     """
     Function that generates the deck, instead of writing down 50 cards, we use iteration

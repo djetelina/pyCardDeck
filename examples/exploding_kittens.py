@@ -1,3 +1,10 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+This is an example of pyCardDeck, it's not meant to be complete poker script,
+but rather a showcase of pyCardDeck's usage.
+"""
+
 import pyCardDeck
 from pyCardDeck.cards import BaseCard
 from random import randrange
