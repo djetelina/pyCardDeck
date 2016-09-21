@@ -7,5 +7,7 @@ at the examples we wrote to help you understand how to use pyCardDeck, enjoy!
 .. toctree::
    :maxdepth: 2
 
+   blackjack
+   hearthstone
    poker
    kittens
