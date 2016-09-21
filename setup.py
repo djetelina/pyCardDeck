@@ -33,7 +33,7 @@ class PyTest(TestCommand):
 
 class PyTestCov(Command):
     description = "run tests and report them to codeclimate"
-    user_options= []
+    user_options = []
 
     def initialize_options(self):
         pass
@@ -58,7 +58,7 @@ with open('README.rst', encoding='utf-8') as f:
     long_description = f.read()
 
 setup(name='pyCardDeck',
-      version='1.2.0',
+      version='1.3.0',
       description='Logic for decks with cards',
       long_description=long_description,
       url='https://www.djetelina.cz/project/pycarddeck/',
@@ -66,7 +66,7 @@ setup(name='pyCardDeck',
       author_email='david@djetelina.cz',
       license='MIT',
       classifiers=[
-          'Development Status :: 4 - Beta',
+          'Development Status :: 5 - Production/Stable',
           'Intended Audience :: Developers',
           'Topic :: Software Development :: Libraries',
           'Topic :: Software Development :: Libraries :: Python Modules',

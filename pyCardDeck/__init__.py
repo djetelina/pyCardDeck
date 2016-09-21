@@ -14,7 +14,7 @@ __title__ = 'pyCardDeck'
 __author__ = 'David Jetelina'
 __license__ = 'MIT'
 __copyright__ = 'Copyright 2016 David Jetelina'
-__version__ = '1.2.0'
+__version__ = '1.3.0'
 
 from .deck import *
 from .errors import *
