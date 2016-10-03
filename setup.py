@@ -48,7 +48,7 @@ class PyTestCov(Command):
         raise SystemExit(errno)
 
 
-test_requirements = ['pytest>=3.0.1', 'pytest-cov>=2.3.1', 'codeclimate-test-reporter>=0.1.2']
+test_requirements = ['pytest>=3.0.3', 'pytest-cov>=2.3.1', 'codeclimate-test-reporter>=0.1.2']
 
 requirements = ['PyYAML>=3.11', 'jsonpickle>=0.9.3']
 if sys.version_info.minor < 5:
