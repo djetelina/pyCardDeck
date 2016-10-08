@@ -3,7 +3,8 @@ engines:
     enabled: true
     config:
       languages:
-      - python
+        python:
+          python_version: 3
   fixme:
     enabled: true
   radon:
