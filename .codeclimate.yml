@@ -15,5 +15,4 @@ engines:
 ratings:
   paths:
   - "pyCardDeck/**.py"
-  - "tests/**.py"
   - "examples/**.py"
