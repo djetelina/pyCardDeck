@@ -2,6 +2,6 @@ codeclimate-test-reporter==0.1.2
 jsonpickle==0.9.3
 py==1.4.31
 pytest==3.0.3
-pytest-cov==2.3.1
+pytest-cov>=2.3.1
 PyYAML>=3.12
 typing==3.5.2.2
