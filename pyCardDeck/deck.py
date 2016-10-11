@@ -42,6 +42,36 @@ class Deck:
         self._reshuffle = reshuffle
         self._save_location = None
 
+    def _get_card(self, position: str = "top") -> CardType:
+        """
+        Helper function for drawing from the deck. Shouldn't be used
+
+        :param position:        Where to draw from
+        :type position:         str
+        :return:                Drawn card
+        :rtype:                 :ref:`CardType`
+        :raises OutOfCards:     when there are no cards in the deck
+        :raises NoCards:        when the deck runs out of cards (no reshuffle)
+        """
+        if len(self._cards):
+            positions = {
+                "top": 0,
+                "bottom": len(self._cards) - 1,
+                "random": randrange(len(self._cards))
+            }
+            card = self._cards.pop(positions[position])
+            self.reshuffle_if_empty()
+            log.debug('Card drawn from %s: %s', (position, card))
+            return card
+
+        elif not self._reshuffle:
+            log.debug('You tried to draw. No more cards to be drawn. Position: %s', position)
+            raise OutOfCards('You tried to draw. No more cards to be drawn. Position: %s', position)
+
+        else:
+            log.debug('You tried to draw from an empty deck. Position: %s', position)
+            raise NoCards('You tried to draw from an empty deck. Position: %s', position)
+
     def draw(self) -> CardType:
         """
         Draw the topmost card from the deck
@@ -51,19 +81,7 @@ class Deck:
         :raises OutOfCards:     when there are no cards in the deck
         :raises NoCards:        when the deck runs out of cards (no reshuffle)
         """
-        if len(self._cards):
-            card = self._cards.pop(0)
-            self.reshuffle_if_empty()
-            log.debug('Card drawn from top: %s', card)
-            return card
-
-        elif not self._reshuffle:
-            log.debug('You tried to draw. No more cards to be drawn')
-            raise OutOfCards('You tried to draw. No more cards to be drawn')
-
-        else:
-            log.debug('You tried to draw from an empty deck')
-            raise NoCards('You tried to draw from an empty deck')
+        return self._get_card("top")
 
     def draw_bottom(self) -> CardType:
         """
@@ -74,19 +92,7 @@ class Deck:
         :raises OutOfCards:     when there are no cards in the deck
         :raises NoCards:        when the deck runs out of cards (no reshuffle)
         """
-        if len(self._cards):
-            card = self._cards.pop()
-            self.reshuffle_if_empty()
-            log.debug('Card drawn from bottom: %s', card)
-            return card
-
-        elif not self._reshuffle:
-            log.debug('You tried to draw from bottom. No more cards to be drawn')
-            raise OutOfCards('You tried to draw from bottom. No more cards to be drawn')
-
-        else:
-            log.debug('You tried to draw from bottom of an empty deck')
-            raise NoCards('You tried to draw from bottom of an empty deck')
+        return self._get_card("bottom")
 
     def draw_random(self) -> CardType:
         """
@@ -97,19 +103,7 @@ class Deck:
         :raises OutOfCards:     when there are no cards in the deck
         :raises NoCards:        when the deck runs out of cards (no reshuffle)
         """
-        if len(self._cards):
-            card = self._cards.pop(randrange(len(self._cards)))
-            self.reshuffle_if_empty()
-            log.debug('Card drawn randomly: %s', card)
-            return card
-
-        elif not self._reshuffle:
-            log.debug('You tried to draw randomly. No more cards to be drawn')
-            raise OutOfCards('You tried to draw randomly. No more cards to be drawn')
-
-        else:
-            log.debug('You tried to draw randomly from an empty deck')
-            raise NoCards('You tried to draw randomly from an empty deck')
+        return self._get_card("random")
 
     # noinspection PyUnboundLocalVariable
     def draw_specific(self, specific_card: CardType) -> CardType:
@@ -134,13 +128,11 @@ class Deck:
         """
         log.debug('Attempting to find card: %s', specific_card)
         if len(self._cards):
-            found = False
             for available_card in self._cards:
                 if _card_compare(specific_card, available_card):
                     card = available_card
-                    found = True
                     break
-            if not found:
+            else:
                 log.debug('Specific card not found in the deck')
                 raise CardNotFound('Specific card not found in the deck')
             self._cards.remove(card)
