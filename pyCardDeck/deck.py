@@ -492,7 +492,7 @@ class Deck:
         """
         return self._cards[position]
 
-    def __setitem(self, position, card):
+    def __setitem__(self, position, card):
         """
         For more pythonic usage
 
