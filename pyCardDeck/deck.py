@@ -484,6 +484,22 @@ class Deck:
         """
         return len(self._cards)
 
+    def __getitem__(self, position):
+        """
+        For more pythonic usage
+
+        Allows for slicing and other things like random.choice(Deck)
+        """
+        return self._cards[position]
+
+    def __setitem(self, position, card):
+        """
+        For more pythonic usage
+
+        Allows for things like random.shuffle(Deck)
+        """
+        self._cards[position] = card
+
 
 def _card_compare(card: CardType, second_card: CardType) -> bool:
     """
