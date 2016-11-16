@@ -141,34 +141,6 @@ def sum_hand(hand: list):
         print("   Current score: {}".format(str(points)))
         return(points)
 
-# def generate_deck() -> List[PokerCard]:
-#     """
-#     Function that generates the deck, instead of writing down 50 cards, we use iteration
-#     to generate the cards for use
-#
-#     :return:    List with all 50 poker playing cards
-#     :rtype:     List[PokerCard]
-#     """
-#     suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades']
-#     ranks = {'A': 'Ace',
-#              '2': 'Two',
-#              '3': 'Three',
-#              '4': 'Four',
-#              '5': 'Five',
-#              '6': 'Six',
-#              '7': 'Seven',
-#              '8': 'Eight',
-#              '9': 'Nine',
-#              '10': 'Ten',
-#              'J': 'Jack',
-#              'Q': 'Queen',
-#              'K': 'King'}
-#     cards = []
-#     for suit in suits:
-#         for rank, name in ranks.items():
-#             cards.append(PokerCard(suit, rank, name))
-#     print('Generated deck of cards for the table.')
-#     return cards
 
 if __name__ == "__main__":
     game = BlackjackGame([Player("Kit"), Player("Anya"), Player("Iris"),
