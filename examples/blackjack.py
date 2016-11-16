@@ -22,10 +22,8 @@ class Player:
 class BlackjackGame:
 
     def __init__(self, players: List[Player]):
-        self.deck = pyCardDeck.Deck(
-            cards=generate_deck(),
-            name='Poker deck',
-            reshuffle=False)
+        self.deck = pyCardDeck.Deck()
+        self.deck.load_standard_deck()
         self.players = players
         self.scores = {}
         print("Created a game with {} players.".format(len(self.players)))
@@ -52,6 +50,42 @@ class BlackjackGame:
         else:
             print("That's the last turn. Determining the winner...")
             self.find_winner()
+
+    def deal(self):
+        """
+        Deals two cards to each player.
+        """
+        for _ in range(2):
+            for p in self.players:
+                newcard = self.deck.draw()
+                p.hand.append(newcard)
+                print("Dealt {} the {}.".format(p.name, str(newcard)))
+
+    def find_winner(self):
+        """
+        Finds the highest score, then finds which player(s) have that score,
+        and reports them as the winner.
+        """
+        winners = []
+        try:
+            win_score = max(self.scores.values())
+            for key in self.scores.keys():
+                if self.scores[key] == win_score:
+                    winners.append(key)
+                else:
+                    pass
+            winstring = " & ".join(winners)
+            print("And the winner is...{}!".format(winstring))
+        except ValueError:
+            print("Whoops! Everybody lost!")
+
+    def hit(self, player):
+        """
+        Adds a card to the player's hand and states which card was drawn.
+        """
+        newcard = self.deck.draw()
+        player.hand.append(newcard)
+        print("   Drew the {}.".format(str(newcard)))
 
     def play(self, player):
         """
@@ -81,44 +115,6 @@ class BlackjackGame:
                 self.scores[player.name] = points
                 break
 
-    def find_winner(self):
-        """
-        Finds the highest score, then finds which player(s) have that score,
-        and reports them as the winner.
-        """
-        winners = []
-        try:
-            win_score = max(self.scores.values())
-            for key in self.scores.keys():
-                if self.scores[key] == win_score:
-                    winners.append(key)
-                else:
-                    pass
-            winstring = " & ".join(winners)
-            print("And the winner is...{}!".format(winstring))
-        except ValueError:
-            print("Whoops! Everybody lost!")
-
-    def deal(self):
-        """
-        Deals two cards to each player.
-        """
-        for _ in range(2):
-            for p in self.players:
-                newcard = self.deck.draw()
-                p.hand.append(newcard)
-                print("Dealt {} the {}.".format(p.name, str(newcard)))
-
-
-    def hit(self, player):
-        """
-        Adds a card to the player's hand and states which card was drawn.
-        """
-        newcard = self.deck.draw()
-        player.hand.append(newcard)
-        print("   Drew the {}.".format(str(newcard)))
-
-
 def sum_hand(hand: list):
     """
     Converts ranks of cards into point values for scoring purposes.
@@ -145,34 +141,6 @@ def sum_hand(hand: list):
         print("   Current score: {}".format(str(points)))
         return(points)
 
-def generate_deck() -> List[PokerCard]:
-    """
-    Function that generates the deck, instead of writing down 50 cards, we use iteration
-    to generate the cards for use
-
-    :return:    List with all 50 poker playing cards
-    :rtype:     List[PokerCard]
-    """
-    suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades']
-    ranks = {'A': 'Ace',
-             '2': 'Two',
-             '3': 'Three',
-             '4': 'Four',
-             '5': 'Five',
-             '6': 'Six',
-             '7': 'Seven',
-             '8': 'Eight',
-             '9': 'Nine',
-             '10': 'Ten',
-             'J': 'Jack',
-             'Q': 'Queen',
-             'K': 'King'}
-    cards = []
-    for suit in suits:
-        for rank, name in ranks.items():
-            cards.append(PokerCard(suit, rank, name))
-    print('Generated deck of cards for the table.')
-    return cards
 
 if __name__ == "__main__":
     game = BlackjackGame([Player("Kit"), Player("Anya"), Player("Iris"),
