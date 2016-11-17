@@ -58,7 +58,7 @@ with open('README.rst', encoding='utf-8') as f:
     long_description = f.read()
 
 setup(name='pyCardDeck',
-      version='1.3.2',
+      version='1.3.3',
       description='Logic for decks with cards',
       long_description=long_description,
       url='https://www.djetelina.cz/project/pycarddeck/',
@@ -83,5 +83,6 @@ setup(name='pyCardDeck',
       packages=find_packages(exclude=['tests', 'docs', 'examples']),
       install_requires=requirements,
       cmdclass={'test': PyTest, 'testcov': PyTestCov},
-      tests_require=test_requirements
+      tests_require=test_requirements,
+      include_package_data=True
       )
