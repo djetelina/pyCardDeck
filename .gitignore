@@ -1,6 +1,7 @@
 # IDEs and environemnts of contributors (feel free to add yours)
 .idea
 virtualenv
+venv
 .env
 
 # Sphinx

@@ -48,6 +48,25 @@ class PyTestCov(Command):
         raise SystemExit(errno)
 
 
+class Publish(Command):
+    description = 'Automate all the boring stuff when releasing the package'
+    user_options = []
+
+    def initialize_options(self):
+        pass
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        os.system('python setup.py register')
+        os.system('python setup.py sdist upload')
+        os.system('python setup.py bdist_wheel upload')
+        os.system('python setup.py bdist upload')
+        print('All done!')
+        sys.exit()
+
+
 test_requirements = ['pytest>=3.0.3', 'pytest-cov>=2.3.1', 'codeclimate-test-reporter>=0.1.2']
 
 requirements = ['PyYAML>=3.11', 'jsonpickle>=0.9.3']
@@ -70,19 +89,23 @@ setup(name='pyCardDeck',
           'Intended Audience :: Developers',
           'Topic :: Software Development :: Libraries',
           'Topic :: Software Development :: Libraries :: Python Modules',
+          'Topic :: Games/Entertainment',
           'Topic :: Utilities',
           'License :: OSI Approved :: MIT License',
           'Natural Language :: English',
           'Operating System :: OS Independent',
           'Programming Language :: Python',
+          'Programming Language :: Python :: 3 :: Only',
           'Programming Language :: Python :: 3.3',
           'Programming Language :: Python :: 3.4',
-          'Programming Language :: Python :: 3.5'
+          'Programming Language :: Python :: 3.5',
+          'Programming Language :: Python :: 3.6',
+          'Programming Language :: Python :: Implementation :: PyPy'
       ],
       keywords='cards deck card game shuffle draw discard',
       packages=find_packages(exclude=['tests', 'docs', 'examples']),
       install_requires=requirements,
-      cmdclass={'test': PyTest, 'testcov': PyTestCov},
+      cmdclass={'test': PyTest, 'testcov': PyTestCov, 'publish': Publish},
       tests_require=test_requirements,
       include_package_data=True
       )
