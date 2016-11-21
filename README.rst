@@ -41,6 +41,9 @@ Library aimed at anyone who wants to do any kind of deck manipulation in python.
 So probably game developers. The goal is to have the ultimate library for all of this,
 supporting all kinds of game types with clean and beautiful API - kind of like requests :)
 
+If you happeen to use this library - please do let me know, I'd like to explore how it's being used. 
+Also, you can leave a `thank you note <https://saythanks.io/to/iScrE4m>`_ :) 
+
 How to use
 ----------
 
@@ -68,7 +71,7 @@ For developers
 The library will support Python 3.3+, for requirements look at requirements.txt in the repository.
 
 This library should be very easy to contribute to for first timers. Nothing is sacred, File issues, contribute
-where you feel it's useful and fun for you!
+where you feel it's useful and fun for you! If you need hlep, just ask.
 
 Always aim to write clean and readable code, make sure the tests are passing, document in docstrings (rst format)
 and when writing new modules, classes or functions, add them to docs (we are using Shpinx autodocs)
