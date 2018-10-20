@@ -502,7 +502,7 @@ class Deck:
         """
         return len(self._cards)
 
-    def __getitem__(self, position):
+    def __getitem__(self, position: int) -> CardType:
         """
         For more pythonic usage
 
@@ -510,7 +510,7 @@ class Deck:
         """
         return self._cards[position]
 
-    def __setitem__(self, position, card):
+    def __setitem__(self, position: int, card: CardType) -> None:
         """
         For more pythonic usage
 
