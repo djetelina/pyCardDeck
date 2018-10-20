@@ -7,7 +7,7 @@ import yaml
 import jsonpickle
 # noinspection PyCompatibility
 # because we are installing it through pip
-from typing import List
+from typing import List, Iterable, Union
 from random import shuffle, randint, randrange
 from .errors import OutOfCards, NotACard, NoCards, CardNotFound, UnknownFormat
 from .cards import CardType
@@ -499,6 +499,12 @@ class Deck:
         Allows for things like random.shuffle(Deck)
         """
         self._cards[position] = card
+
+    def __iter__(self) -> Iterable[CardType]:
+        """
+        For faster pythonic iteration protected against internal changes
+        """
+        return iter(self._cards)
 
 
 def _card_compare(card: CardType, second_card: CardType) -> bool:
