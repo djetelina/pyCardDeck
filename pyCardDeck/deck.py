@@ -222,6 +222,13 @@ class Deck:
             raise NotACard('You tried to insert {} (rank({}) into a discard pile'
                            .format(card, type(card).__name__))
 
+    def clear(self) -> None:
+        """
+        Empties the deck, destroying contents
+        """
+        self._cards = []
+
+
     def add_single(self, card: CardType, position: int = False) -> None:
         """
         Shuffles (or inserts) a single card into the active deck
