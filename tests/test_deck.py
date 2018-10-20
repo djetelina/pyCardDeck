@@ -170,6 +170,23 @@ def test_discard():
     assert d.discarded == 3
 
 
+def test_deck_discard():
+    cardlist = [
+        Card('One'), Card('Two'), Card('Three'), Card('Four')
+    ]
+    discardpile = Deck(reshuffle=False)
+    d = Deck(cards=cardlist[:], reshuffle=False, discard=discardpile)
+    d.discard(d.draw())
+    d.discard(d.draw())
+    assert d.discarded == 2
+    assert len(discardpile) == 2
+    assert discardpile[1] == cardlist[0]
+    d.shuffle_back()
+    assert d.discarded == 0
+    assert len(d) == 4
+    assert len(discardpile) == 0
+
+
 def test_shuffle_back():
     d = Deck(cards=[
         Card('One'), Card('Two'), Card('Three'), Card('Four')

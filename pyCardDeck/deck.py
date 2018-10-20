@@ -27,9 +27,11 @@ class Deck:
     :type reshuffle:    bool
     :param name:        Name of the deck, used when converting the Deck instance into string
     :type name:         string
+    :param discard:     optional Deck object to use as discard pile
+    :type discard:      Union[Deck, None]
     """
 
-    def __init__(self, cards: object = None, reshuffle: object = True, name: object = None):
+    def __init__(self, cards: object = None, reshuffle: object = True, name: object = None, discard: Union['Deck', None] = None):
         """
         Create the deck
         """
@@ -38,7 +40,10 @@ class Deck:
         self._cards = cards
         if self._cards is None:
             self._cards = []
-        self._discard_pile = []
+        if discard is None:
+            self._discard_pile = []
+        else:
+            self._discard_pile = discard
         self._reshuffle = reshuffle
         self._save_location = None
 
@@ -198,7 +203,10 @@ class Deck:
         for card in self._discard_pile:
             self._cards.append(card)
         self.shuffle()
-        self._discard_pile = []
+        if isinstance(self._discard_pile, Deck):
+            self._discard_pile.clear()
+        else:
+            self._discard_pile = []
         log.debug('Cards have been shuffled back from the discard pile')
 
     def discard(self, card: CardType) -> None:
@@ -211,7 +219,10 @@ class Deck:
         """
         log.debug("Card being discarded: %s", card)
         if card or type(card) == int:
-            self._discard_pile.append(card)
+            if isinstance(self._discard_pile, Deck):
+                self._discard_pile.add_single(card, 0)
+            else:
+                self._discard_pile.append(card)
             log.debug('Card %s discarded', card)
         # This had a reason, I remember testing something and ending
         # up with False/None in discard_pile - if anyone knows what
