@@ -239,7 +239,6 @@ class Deck:
         """
         self._cards = []
 
-
     def add_single(self, card: CardType, position: int = False) -> None:
         """
         Shuffles (or inserts) a single card into the active deck
