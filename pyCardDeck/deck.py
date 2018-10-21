@@ -7,7 +7,7 @@ import yaml
 import jsonpickle
 # noinspection PyCompatibility
 # because we are installing it through pip
-from typing import List
+from typing import List, Iterable, Union
 from random import shuffle, randint, randrange
 from .errors import OutOfCards, NotACard, NoCards, CardNotFound, UnknownFormat
 from .cards import CardType
@@ -27,9 +27,11 @@ class Deck:
     :type reshuffle:    bool
     :param name:        Name of the deck, used when converting the Deck instance into string
     :type name:         string
+    :param discard:     optional Deck object to use as discard pile
+    :type discard:      Union[Deck, None]
     """
 
-    def __init__(self, cards: object = None, reshuffle: object = True, name: object = None):
+    def __init__(self, cards: object = None, reshuffle: object = True, name: object = None, discard: Union['Deck', None] = None):
         """
         Create the deck
         """
@@ -38,7 +40,10 @@ class Deck:
         self._cards = cards
         if self._cards is None:
             self._cards = []
-        self._discard_pile = []
+        if discard is None:
+            self._discard_pile = []
+        else:
+            self._discard_pile = discard
         self._reshuffle = reshuffle
         self._save_location = None
 
@@ -198,7 +203,10 @@ class Deck:
         for card in self._discard_pile:
             self._cards.append(card)
         self.shuffle()
-        self._discard_pile = []
+        if isinstance(self._discard_pile, Deck):
+            self._discard_pile.clear()
+        else:
+            self._discard_pile = []
         log.debug('Cards have been shuffled back from the discard pile')
 
     def discard(self, card: CardType) -> None:
@@ -211,7 +219,10 @@ class Deck:
         """
         log.debug("Card being discarded: %s", card)
         if card or type(card) == int:
-            self._discard_pile.append(card)
+            if isinstance(self._discard_pile, Deck):
+                self._discard_pile.add_single(card, 0)
+            else:
+                self._discard_pile.append(card)
             log.debug('Card %s discarded', card)
         # This had a reason, I remember testing something and ending
         # up with False/None in discard_pile - if anyone knows what
@@ -221,6 +232,12 @@ class Deck:
                         card, type(card).__name__)
             raise NotACard('You tried to insert {} (rank({}) into a discard pile'
                            .format(card, type(card).__name__))
+
+    def clear(self) -> None:
+        """
+        Empties the deck, destroying contents
+        """
+        self._cards = []
 
     def add_single(self, card: CardType, position: int = False) -> None:
         """
@@ -484,7 +501,7 @@ class Deck:
         """
         return len(self._cards)
 
-    def __getitem__(self, position):
+    def __getitem__(self, position: int) -> CardType:
         """
         For more pythonic usage
 
@@ -492,13 +509,19 @@ class Deck:
         """
         return self._cards[position]
 
-    def __setitem__(self, position, card):
+    def __setitem__(self, position: int, card: CardType) -> None:
         """
         For more pythonic usage
 
         Allows for things like random.shuffle(Deck)
         """
         self._cards[position] = card
+
+    def __iter__(self) -> Iterable[CardType]:
+        """
+        For faster pythonic iteration protected against internal changes
+        """
+        return iter(self._cards)
 
 
 def _card_compare(card: CardType, second_card: CardType) -> bool:
