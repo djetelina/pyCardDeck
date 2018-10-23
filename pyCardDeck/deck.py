@@ -7,7 +7,7 @@ import yaml
 import jsonpickle
 # noinspection PyCompatibility
 # because we are installing it through pip
-from typing import List, Iterable, Union
+from typing import List, Union, Optional, Iterator
 from random import shuffle, randint, randrange
 from .errors import OutOfCards, NotACard, NoCards, CardNotFound, UnknownFormat
 from .cards import CardType
@@ -31,21 +31,23 @@ class Deck:
     :type discard:      Union[Deck, None]
     """
 
-    def __init__(self, cards: object = None, reshuffle: object = True, name: object = None, discard: Union['Deck', None] = None):
+    def __init__(self, cards: Optional[List[CardType]] = None, reshuffle: object = True, name: str = None,
+                 discard: Optional['Deck'] = None):
         """
         Create the deck
         """
 
         self.name = name
-        self._cards = cards
-        if self._cards is None:
-            self._cards = []
+        if cards is None:
+            self._cards = []  # type: List[CardType]
+        else:
+            self._cards = cards
         if discard is None:
-            self._discard_pile = []
+            self._discard_pile = []  # type: Union[Deck, List[CardType]]
         else:
             self._discard_pile = discard
         self._reshuffle = reshuffle
-        self._save_location = None
+        self.set_file_location("exported_deck")
 
     def _get_card(self, position: str = "top") -> CardType:
         """
@@ -196,7 +198,7 @@ class Deck:
         if not len(self._cards) and self._reshuffle:
             self.shuffle_back()
 
-    def shuffle_back(self) -> object:
+    def shuffle_back(self) -> None:
         """
         Shuffles the discard pile back into the main pile
         """
@@ -325,7 +327,7 @@ class Deck:
         if location:
             self.set_file_location(location)
         # if we don't know where, let's make a default export file
-        elif self._save_location is None:
+        else:
             self.set_file_location("exported_deck")
 
         # Hide location for security from exported deck
@@ -517,7 +519,7 @@ class Deck:
         """
         self._cards[position] = card
 
-    def __iter__(self) -> Iterable[CardType]:
+    def __iter__(self) -> Iterator[CardType]:
         """
         For faster pythonic iteration protected against internal changes
         """

@@ -14,7 +14,7 @@ class BaseCard:
     them to strings.
     """
 
-    def __init__(self, name: str):
+    def __init__(self, name: str) -> None:
         self.name = name
 
     def __str__(self):
@@ -30,7 +30,7 @@ class PokerCard(BaseCard):
     we can say that if their name equals, they equal too.
     """
 
-    def __init__(self, suit: str, rank: str, name: str):
+    def __init__(self, suit: str, rank: str, name: str) -> None:
         # Define self.name through BaseCard Class
         super().__init__("{} of {}".format(name, suit))
         self.suit = suit

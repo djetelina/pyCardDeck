@@ -77,7 +77,7 @@ with open('README.rst', encoding='utf-8') as f:
     long_description = f.read()
 
 setup(name='pyCardDeck',
-      version='1.3.3',
+      version='1.4.0',
       description='Logic for decks with cards',
       long_description=long_description,
       url='https://www.djetelina.cz/project/pycarddeck/',
