@@ -6,12 +6,13 @@ but rather a showcase of pyCardDeck's usage.
 """
 
 import pyCardDeck
+
 # noinspection PyCompatibility
 from typing import List
 from pyCardDeck.cards import PokerCard
 
-class Player:
 
+class Player:
     def __init__(self, name: str):
         self.hand = []
         self.name = name
@@ -21,12 +22,10 @@ class Player:
 
 
 class PokerTable:
-
     def __init__(self, players: List[Player]):
         self.deck = pyCardDeck.Deck(
-            cards=generate_deck(),
-            name='Poker deck',
-            reshuffle=False)
+            cards=generate_deck(), name="Poker deck", reshuffle=False
+        )
         self.players = players
         self.table_cards = []
         print("Created a table with {} players".format(len(self.players)))
@@ -105,27 +104,30 @@ def generate_deck() -> List[PokerCard]:
     :return:    List with all 50 poker playing cards
     :rtype:     List[PokerCard]
     """
-    suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades']
-    ranks = {'A': 'Ace',
-             '2': 'Two',
-             '3': 'Three',
-             '4': 'Four',
-             '5': 'Five',
-             '6': 'Six',
-             '7': 'Seven',
-             '8': 'Eight',
-             '9': 'Nine',
-             '10': 'Ten',
-             'J': 'Jack',
-             'Q': 'Queen',
-             'K': 'King'}
+    suits = ["Hearts", "Diamonds", "Clubs", "Spades"]
+    ranks = {
+        "A": "Ace",
+        "2": "Two",
+        "3": "Three",
+        "4": "Four",
+        "5": "Five",
+        "6": "Six",
+        "7": "Seven",
+        "8": "Eight",
+        "9": "Nine",
+        "10": "Ten",
+        "J": "Jack",
+        "Q": "Queen",
+        "K": "King",
+    }
     cards = []
     for suit in suits:
         for rank, name in ranks.items():
             cards.append(PokerCard(suit, rank, name))
-    print('Generated deck of cards for the table')
+    print("Generated deck of cards for the table")
     return cards
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     table = PokerTable([Player("Jack"), Player("John"), Player("Peter")])
     table.texas_holdem()

@@ -11,7 +11,6 @@ from random import randrange
 
 
 class Player:
-
     def __init__(self):
         self.hand = []
 
@@ -35,12 +34,15 @@ class Player:
         return False
 
     def insert_explode(self) -> int:
-        position = int(input("At which position from top do you want to insert Exploding Kitten back into the deck?"))
+        position = int(
+            input(
+                "At which position from top do you want to insert Exploding Kitten back into the deck?"
+            )
+        )
         return position
 
 
 class KittenCard(BaseCard):
-
     def __init__(self, name: str, targetable: bool = False, selfcast: bool = False):
         super().__init__(name)
         self.selfcast = selfcast
@@ -51,13 +53,11 @@ class KittenCard(BaseCard):
 
 
 class ExplodeCard(KittenCard):
-
     def __init__(self, name: str = "Exploding Kitten"):
         super().__init__(name)
 
 
 class DefuseCard(KittenCard):
-
     def __init__(self, deck: pyCardDeck.deck, name: str = "Defuse"):
         super().__init__(name, selfcast=True)
         self.deck = deck
@@ -68,19 +68,16 @@ class DefuseCard(KittenCard):
 
 
 class TacocatCard(KittenCard):
-
     def __init__(self, name: str = "Tacocat"):
         super().__init__(name)
 
 
 class OverweightCard(KittenCard):
-
     def __init__(self, name: str = "Overweight Bikini Cat"):
         super().__init__(name)
 
 
 class ShuffleCard(KittenCard):
-
     def __init__(self, deck: pyCardDeck.Deck, name: str = "Shuffle"):
         super().__init__(name)
         self.deck = deck
@@ -90,7 +87,6 @@ class ShuffleCard(KittenCard):
 
 
 class AttackCard(KittenCard):
-
     def __init__(self, name: str = "Attack"):
         super().__init__(name, selfcast=True, targetable=True)
 
@@ -100,7 +96,6 @@ class AttackCard(KittenCard):
 
 
 class SeeTheFuture(KittenCard):
-
     def __init__(self, deck: pyCardDeck.Deck, name: str = "See The Future"):
         super().__init__(name)
         self.deck = deck
@@ -110,13 +105,11 @@ class SeeTheFuture(KittenCard):
 
 
 class NopeCard(KittenCard):
-
     def __init__(self, name: str = "Nope"):
         super().__init__(name)
 
 
 class SkipCard(KittenCard):
-
     def __init__(self, name: str = "Skip"):
         super().__init__(name, selfcast=True)
 
@@ -125,7 +118,6 @@ class SkipCard(KittenCard):
 
 
 class FavorCard(KittenCard):
-
     def __init__(self, name: str = "Favor"):
         super().__init__(name, targetable=True, selfcast=True)
 
@@ -135,7 +127,6 @@ class FavorCard(KittenCard):
 
 
 class Game:
-
     def __init__(self, players: list):
         self.deck = pyCardDeck.Deck()
         self.players = players
@@ -174,7 +165,9 @@ class Game:
 
     def add_defuses(self):
         print("Adding defuses to the deck")
-        self.deck.add_many([DefuseCard(self.deck) for _ in range(6 - len(self.players))])
+        self.deck.add_many(
+            [DefuseCard(self.deck) for _ in range(6 - len(self.players))]
+        )
 
     def play_card(self, card: KittenCard, player: Player = None, target: Player = None):
         if card.selfcast and player is None:

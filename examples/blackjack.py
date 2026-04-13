@@ -8,10 +8,9 @@ but rather a showcase of pyCardDeck's usage.
 import sys
 import pyCardDeck
 from typing import List
-from pyCardDeck.cards import PokerCard
+
 
 class Player:
-
     def __init__(self, name: str):
         self.hand = []
         self.name = name
@@ -19,8 +18,8 @@ class Player:
     def __str__(self):
         return self.name
 
-class BlackjackGame:
 
+class BlackjackGame:
     def __init__(self, players: List[Player]):
         self.deck = pyCardDeck.Deck()
         self.deck.load_standard_deck()
@@ -106,7 +105,7 @@ class BlackjackGame:
                 self.hit(player)
             elif points == 21:
                 print("   {} wins!".format(player.name))
-                sys.exit(0) # End if someone wins
+                sys.exit(0)  # End if someone wins
             elif points > 21:
                 print("   Bust!")
                 break
@@ -114,6 +113,7 @@ class BlackjackGame:
                 print("   Standing at {} points.".format(str(points)))
                 self.scores[player.name] = points
                 break
+
 
 def sum_hand(hand: list):
     """
@@ -129,20 +129,21 @@ def sum_hand(hand: list):
         try:
             intvals.append(int(value))
         except ValueError:
-            if value in ['K', 'Q', 'J']:
+            if value in ["K", "Q", "J"]:
                 intvals.append(10)
-            elif value == 'A':
+            elif value == "A":
                 intvals.append(1)  # Keep it simple for the sake of example
     if intvals == [1, 10] or intvals == [10, 1]:
         print("   Blackjack!")
-        return(21)
+        return 21
     else:
         points = sum(intvals)
         print("   Current score: {}".format(str(points)))
-        return(points)
+        return points
 
 
 if __name__ == "__main__":
-    game = BlackjackGame([Player("Kit"), Player("Anya"), Player("Iris"),
-        Player("Simon")])
+    game = BlackjackGame(
+        [Player("Kit"), Player("Anya"), Player("Iris"), Player("Simon")]
+    )
     game.blackjack()
