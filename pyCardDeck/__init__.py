@@ -1,20 +1,18 @@
-# -*- coding: utf-8 -*-
-
 """
 pyCardDeck
 ==========
 
 Deck of cards with all the logic, so you don't have to!
 
-:copyright:     (c) 2016 David Jetelina
+:copyright:     (c) 2016-2026 David Jetelina
 :license:       MIT
 """
 
-__title__ = 'pyCardDeck'
-__author__ = 'David Jetelina'
-__license__ = 'MIT'
-__copyright__ = 'Copyright 2016 David Jetelina'
-__version__ = '1.4.0'
+__title__ = "pyCardDeck"
+__author__ = "David Jetelina"
+__license__ = "MIT"
+__copyright__ = "Copyright 2016-2026 David Jetelina"
+__version__ = "1.5.0"
 
 from .deck import *
 from .errors import *

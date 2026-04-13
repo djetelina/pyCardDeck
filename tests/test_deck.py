@@ -16,8 +16,7 @@ class Card:
         self.specific_string = specific_string
 
     def __repr__(self):  # pragma: no cover
-        return "Card instance {0.name}, {0.specific_string}" \
-            .format(self)
+        return "Card instance {0.name}, {0.specific_string}".format(self)
 
 
 class DifferentCard(Card):
@@ -36,35 +35,35 @@ class ExportCard(Card):
 
 
 def test_draw():
-    d = Deck(cards=[
-        Card('One'), Card('Two'), Card('Three'), Card('Four')
-    ], reshuffle=False)
-    assert d.draw().name == Card('One').name
+    d = Deck(
+        cards=[Card("One"), Card("Two"), Card("Three"), Card("Four")], reshuffle=False
+    )
+    assert d.draw().name == Card("One").name
     d.draw()
     d.draw()
-    assert d.draw().name == Card('Four').name
+    assert d.draw().name == Card("Four").name
     with pytest.raises(OutOfCards):
         d.draw()
     assert d.empty
 
 
 def test_draw_bottom():
-    d = Deck(cards=[
-        Card('One'), Card('Two'), Card('Three'), Card('Four')
-    ], reshuffle=False)
+    d = Deck(
+        cards=[Card("One"), Card("Two"), Card("Three"), Card("Four")], reshuffle=False
+    )
     d.draw_bottom()
-    assert d.draw_bottom().name == Card('Three').name
+    assert d.draw_bottom().name == Card("Three").name
     d.draw_bottom()
-    assert d.draw_bottom().name == Card('One').name
+    assert d.draw_bottom().name == Card("One").name
     with pytest.raises(OutOfCards):
         d.draw_bottom()
     assert d.empty
 
 
 def test_draw_random():
-    d = Deck(cards=[
-        Card('One'), Card('Two'), Card('Three'), Card('Four')
-    ], reshuffle=False)
+    d = Deck(
+        cards=[Card("One"), Card("Two"), Card("Three"), Card("Four")], reshuffle=False
+    )
     d.draw_random()
     d.draw_random()
     d.draw_random()
@@ -76,19 +75,14 @@ def test_draw_random():
 
 
 def test_draw_specific_instance():
-    one = Card('One', specific_string="bbc")
-    one_small = Card('one', specific_string="bbc")
-    one_diff_string = Card('One', specific_string="car")
-    one_bare = Card('One')
-    d = Deck(cards=[
-        one,
-        one_small,
-        one_diff_string,
-        one_bare
-    ], reshuffle=False)
+    one = Card("One", specific_string="bbc")
+    one_small = Card("one", specific_string="bbc")
+    one_diff_string = Card("One", specific_string="car")
+    one_bare = Card("One")
+    d = Deck(cards=[one, one_small, one_diff_string, one_bare], reshuffle=False)
     assert d.draw_specific(one).__dict__ == one.__dict__
     with pytest.raises(CardNotFound):
-        d.draw_specific(Card('Seven'))
+        d.draw_specific(Card("Seven"))
     d.draw_specific(one_small)
     d.draw_specific(one_diff_string)
     d.draw_specific(one_bare)
@@ -98,8 +92,8 @@ def test_draw_specific_instance():
 
 
 def test_draw_specific_string():
-    d = Deck(cards=['a', 'b', 'c', 'd'])
-    assert d.draw_specific('a') == 'a'
+    d = Deck(cards=["a", "b", "c", "d"])
+    assert d.draw_specific("a") == "a"
 
 
 def test_draws_else():
@@ -114,40 +108,43 @@ def test_draws_else():
 
 
 def test_draws_reshuffle():
-    d = Deck(cards=[Card('One')])
-    d.discard(Card('One'))
-    d.draw_specific(Card('One'))
+    d = Deck(cards=[Card("One")])
+    d.discard(Card("One"))
+    d.draw_specific(Card("One"))
     assert not d.empty
-    d.discard(Card('One'))
+    d.discard(Card("One"))
     d.draw()
     assert not d.empty
-    d.discard(Card('One'))
+    d.discard(Card("One"))
     d.draw_bottom()
     assert not d.empty
-    d.discard(Card('One'))
+    d.discard(Card("One"))
     d.draw_random()
     assert not d.empty
 
 
 def test_card_exists_instance():
-    one = Card('One', specific_string='bbc')
-    one_alt = DifferentCard('One', specific_string='bbc')
-    d = Deck(cards=[
-        one,
-        Card('one', specific_string='bbc'),
-        Card('One', specific_string='car'),
-        Card('One')
-    ], reshuffle=False)
+    one = Card("One", specific_string="bbc")
+    one_alt = DifferentCard("One", specific_string="bbc")
+    d = Deck(
+        cards=[
+            one,
+            Card("one", specific_string="bbc"),
+            Card("One", specific_string="car"),
+            Card("One"),
+        ],
+        reshuffle=False,
+    )
     assert d.card_exists(one)
 
     assert not d.card_exists(one_alt)
-    assert not d.card_exists(Card('Five'))
+    assert not d.card_exists(Card("Five"))
 
 
 def test_card_exist_string():
-    d = Deck(cards=['a', 'b', 'c', 'd'])
-    assert d.card_exists('a')
-    assert not d.card_exists('z')
+    d = Deck(cards=["a", "b", "c", "d"])
+    assert d.card_exists("a")
+    assert not d.card_exists("z")
 
 
 def test_shuffle():
@@ -157,11 +154,11 @@ def test_shuffle():
 
 
 def test_discard():
-    d = Deck(cards=[
-        Card('One'), Card('Two'), Card('Three'), Card('Four')
-    ], reshuffle=False)
-    d.discard(Card('One'))
-    d.discard(Card('Two'))
+    d = Deck(
+        cards=[Card("One"), Card("Two"), Card("Three"), Card("Four")], reshuffle=False
+    )
+    d.discard(Card("One"))
+    d.discard(Card("Two"))
     assert d.discarded == 2
     with pytest.raises(NotACard):
         d.discard(False)
@@ -171,9 +168,7 @@ def test_discard():
 
 
 def test_deck_discard():
-    cardlist = [
-        Card('One'), Card('Two'), Card('Three'), Card('Four')
-    ]
+    cardlist = [Card("One"), Card("Two"), Card("Three"), Card("Four")]
     discardpile = Deck(reshuffle=False)
     d = Deck(cards=cardlist[:], reshuffle=False, discard=discardpile)
     d.discard(d.draw())
@@ -188,59 +183,59 @@ def test_deck_discard():
 
 
 def test_shuffle_back():
-    d = Deck(cards=[
-        Card('One'), Card('Two'), Card('Three'), Card('Four')
-    ], reshuffle=False)
+    d = Deck(
+        cards=[Card("One"), Card("Two"), Card("Three"), Card("Four")], reshuffle=False
+    )
     d.draw()
     d.draw()
     assert len(d) == 2
-    d.discard(Card('One'))
-    d.discard(Card('Two'))
+    d.discard(Card("One"))
+    d.discard(Card("Two"))
     d.shuffle_back()
     assert len(d) == 4
 
 
 # noinspection PyProtectedMember
 def test_add_single():
-    d = Deck(cards=[
-        Card('One'), Card('Two'), Card('Three'), Card('Four')
-    ], reshuffle=False)
-    d.add_single(Card('Five'))
+    d = Deck(
+        cards=[Card("One"), Card("Two"), Card("Three"), Card("Four")], reshuffle=False
+    )
+    d.add_single(Card("Five"))
     assert len(d) == 5
-    six = Card('Six')
+    six = Card("Six")
     d.add_single(six, position=0)
     assert len(d) == 6
     assert d._cards[0] == six
 
 
 def test_add_many():
-    d = Deck(cards=[
-        Card('One'), Card('Two'), Card('Three'), Card('Four')
-    ], reshuffle=False)
-    d.add_many([Card('Five'), Card('Six')])
+    d = Deck(
+        cards=[Card("One"), Card("Two"), Card("Three"), Card("Four")], reshuffle=False
+    )
+    d.add_many([Card("Five"), Card("Six")])
     assert len(d) == 6
 
 
 def test_show_top_one():
-    d = Deck(cards=[
-        Card('One'), Card('Two'), Card('Three'), Card('Four')
-    ], reshuffle=False)
-    assert d.show_top(1)[0].__dict__ == Card('One').__dict__
+    d = Deck(
+        cards=[Card("One"), Card("Two"), Card("Three"), Card("Four")], reshuffle=False
+    )
+    assert d.show_top(1)[0].__dict__ == Card("One").__dict__
 
 
 def test_show_top_three():
-    d = Deck(cards=[
-        Card('One'), Card('Two'), Card('Three'), Card('Four')
-    ], reshuffle=False)
-    assert d.show_top(3)[0].__dict__, Card('One').__dict__
-    assert d.show_top(3)[1].__dict__, Card('Two').__dict__
-    assert d.show_top(3)[2].__dict__, Card('Three').__dict__
+    d = Deck(
+        cards=[Card("One"), Card("Two"), Card("Three"), Card("Four")], reshuffle=False
+    )
+    assert d.show_top(3)[0].__dict__, Card("One").__dict__
+    assert d.show_top(3)[1].__dict__, Card("Two").__dict__
+    assert d.show_top(3)[2].__dict__, Card("Three").__dict__
 
 
 def test_cards_left():
-    d = Deck(cards=[
-        Card('One'), Card('Two'), Card('Three'), Card('Four')
-    ], reshuffle=False)
+    d = Deck(
+        cards=[Card("One"), Card("Two"), Card("Three"), Card("Four")], reshuffle=False
+    )
     assert d.cards_left == 4
 
 
@@ -250,9 +245,9 @@ def test_cards_left_empty():
 
 
 def test_discarded():
-    d = Deck(cards=[
-        Card('One'), Card('Two'), Card('Three'), Card('Four')
-    ], reshuffle=False)
+    d = Deck(
+        cards=[Card("One"), Card("Two"), Card("Three"), Card("Four")], reshuffle=False
+    )
     d.discard(d.draw())
     d.discard(d.draw_bottom())
     assert d.discarded, 2
@@ -260,20 +255,22 @@ def test_discarded():
 
 def test__repr__():
     d = Deck()
-    assert 'Deck(cards=0, discarded=0, reshuffle=True, name=None)', repr(d)
-    d = Deck(cards=[Card('One'), Card('Two'), Card('Three')], reshuffle=False, name='Deck')
-    d.discard(Card('Four'))
-    assert 'Deck(cards=3, discarded=1, reshuffle=False, name=Deck)', repr(d)
+    assert "Deck(cards=0, discarded=0, reshuffle=True, name=None)", repr(d)
+    d = Deck(
+        cards=[Card("One"), Card("Two"), Card("Three")], reshuffle=False, name="Deck"
+    )
+    d.discard(Card("Four"))
+    assert "Deck(cards=3, discarded=1, reshuffle=False, name=Deck)", repr(d)
 
 
 def test__str__named():
-    d = Deck(name='SuperDeck')
-    assert 'SuperDeck' == str(d)
+    d = Deck(name="SuperDeck")
+    assert "SuperDeck" == str(d)
 
 
 def test__str__():
     d = Deck()
-    assert 'Deck of cards' == str(d)
+    assert "Deck of cards" == str(d)
 
 
 # noinspection PyProtectedMember,PyProtectedMember,PyProtectedMember,PyProtectedMember
@@ -289,7 +286,7 @@ def test_yaml_import_export_ints():
 
 # noinspection PyProtectedMember,PyProtectedMember,PyProtectedMember,PyProtectedMember,PyProtectedMember
 def test_yaml_import_export_strings():
-    d = Deck(cards=["one", "two", "three", 'four', '5', '6'], name="Test yaml str")
+    d = Deck(cards=["one", "two", "three", "four", "5", "6"], name="Test yaml str")
     d.export("YAML", to_file=True, location="tests/temp/test_str.yaml")
     e = Deck()
     e.load("tests/temp/test_str.yaml", is_file=True)
@@ -301,8 +298,10 @@ def test_yaml_import_export_strings():
 
 # noinspection PyProtectedMember,PyProtectedMember,PyProtectedMember,PyProtectedMember
 def test_yaml_import_export_base_card():
-    d = Deck(cards=[BaseCard("One"), BaseCard("Two"), BaseCard("Three"), BaseCard("Four")],
-             name="Test yaml basecard")
+    d = Deck(
+        cards=[BaseCard("One"), BaseCard("Two"), BaseCard("Three"), BaseCard("Four")],
+        name="Test yaml basecard",
+    )
     d.export("yaml ", to_file=True, location="tests/temp/test_basecard.yaml")
     e = Deck()
     e.load("tests/temp/test_basecard.yaml", is_file=True)
@@ -313,7 +312,10 @@ def test_yaml_import_export_base_card():
 
 # noinspection PyProtectedMember,PyProtectedMember,PyProtectedMember,PyProtectedMember
 def test_yaml_import_export_custom_card():
-    d = Deck(cards=[ExportCard("One"), ExportCard("Two"), ExportCard("Three")], name="Test yaml custom")
+    d = Deck(
+        cards=[ExportCard("One"), ExportCard("Two"), ExportCard("Three")],
+        name="Test yaml custom",
+    )
     d.export("   YaML", to_file=True, location="tests/temp/test_custom.yaml")
     e = Deck(name="This will get overridden")
     e.load("tests/temp/test_custom.yaml", is_file=True)
@@ -335,7 +337,7 @@ def test_json_import_export_ints():
 
 # noinspection PyProtectedMember,PyProtectedMember,PyProtectedMember,PyProtectedMember,PyProtectedMember
 def test_json_import_export_strings():
-    d = Deck(cards=["one", "two", "three", 'four', '5', '6'], name="Test json str")
+    d = Deck(cards=["one", "two", "three", "four", "5", "6"], name="Test json str")
     d.export("jsON", to_file=True, location="tests/temp/test_str.json")
     e = Deck()
     e.load("tests/temp/test_str.json", is_file=True)
@@ -347,8 +349,10 @@ def test_json_import_export_strings():
 
 # noinspection PyProtectedMember,PyProtectedMember,PyProtectedMember,PyProtectedMember
 def test_json_import_export_base_card():
-    d = Deck(cards=[BaseCard("One"), BaseCard("Two"), BaseCard("Three"), BaseCard("Four")],
-             name="Test json basecard")
+    d = Deck(
+        cards=[BaseCard("One"), BaseCard("Two"), BaseCard("Three"), BaseCard("Four")],
+        name="Test json basecard",
+    )
     d.export("jSon ", to_file=True, location="tests/temp/test_basecard.json")
     e = Deck()
     e.load("tests/temp/test_basecard.json", is_file=True)
@@ -359,7 +363,10 @@ def test_json_import_export_base_card():
 
 # noinspection PyProtectedMember,PyProtectedMember,PyProtectedMember,PyProtectedMember
 def test_json_import_export_custom_card():
-    d = Deck(cards=[ExportCard("One"), ExportCard("Two"), ExportCard("Three")], name="Test json custom")
+    d = Deck(
+        cards=[ExportCard("One"), ExportCard("Two"), ExportCard("Three")],
+        name="Test json custom",
+    )
     d.export("   json", to_file=True, location="tests/temp/test_custom.json")
     e = Deck(name="This will get overridden")
     e.load("tests/temp/test_custom.json", is_file=True)

@@ -1,0 +1,53 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pyCardDeck"
+dynamic = ["version"]
+description = "Logic for decks with cards"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+authors = [
+    { name = "David Jetelina", email = "david@djetelina.cz" },
+]
+keywords = ["cards", "deck", "card", "game", "shuffle", "draw", "discard"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Games/Entertainment",
+    "Topic :: Utilities",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+]
+dependencies = [
+    "PyYAML>=6.0",
+    "jsonpickle>=3.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/djetelina/pyCardDeck"
+Documentation = "https://pycarddeck.readthedocs.io"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0",
+    "ruff>=0.15",
+    "sphinx>=8.0",
+    "sphinx-rtd-theme>=3.1",
+]
+
+[tool.hatch.version]
+path = "pyCardDeck/__init__.py"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

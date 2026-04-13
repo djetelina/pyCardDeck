@@ -1,11 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
-# noinspection PyCompatibility
-# because we are installing it through pip
-from typing import Union
-
-
 class BaseCard:
     """
     This is an example Card, showing that each Card should have a name.
@@ -21,7 +13,7 @@ class BaseCard:
         return self.name
 
     def __repr__(self):
-        return '{0}({1.__dict__})'.format(type(self).__name__, self)
+        return "{0}({1.__dict__})".format(type(self).__name__, self)
 
 
 class PokerCard(BaseCard):
@@ -31,8 +23,7 @@ class PokerCard(BaseCard):
     """
 
     def __init__(self, suit: str, rank: str, name: str) -> None:
-        # Define self.name through BaseCard Class
-        super().__init__("{} of {}".format(name, suit))
+        super().__init__(f"{name} of {suit}")
         self.suit = suit
         self.rank = rank
 
@@ -40,4 +31,4 @@ class PokerCard(BaseCard):
         return self.name == other
 
 
-CardType = Union[BaseCard, PokerCard, object, str, int]
+CardType = BaseCard | PokerCard | object | str | int
